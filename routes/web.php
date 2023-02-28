@@ -33,6 +33,15 @@ Route::group(['middleware'=>"auth",'prefix'=>"dashboard"], function(){
     Route::post("/account/edit/",[AdminController::class,"editUserAccount"]);
     Route::post("/account/delete/{id}",[AdminController::class,"deleAccount"]);
 
+    Route::get("/service/create/",[AdminController::class,"showServicePage"]);
+    Route::get("/service/list/",[AdminController::class,"listServices"]);
+    Route::post("/service/create/",[AdminController::class,"createService"]);
+    Route::get("/service/edit/{id}",[AdminController::class,"showServiceEditPage"]);
+    Route::post("/service/delete/{id}",[AdminController::class,"deleteService"]);
+    Route::post("/service/edit/",[AdminController::class,"editService"]);
+
+
+
 
 
 });

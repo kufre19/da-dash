@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\ServicesOffered;
 use App\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
@@ -63,6 +64,52 @@ trait AdminFunctions
             session()->flash('success', 'Account deleted!');
             return redirect()->back();
      
+    }
+
+    public function showServicePage()
+    {
+        return view("services.create");
+    }
+
+    public function showServiceEditPage($id)
+    {
+        $service = ServicesOffered::fetchServiceById($id);
+        return view("services.edit",compact('service'));
+
+    }
+
+    public function createService(Request $request)
+    {
+        $service = $request->input('service');
+        $data = ["service"=>$service];
+        ServicesOffered::addNewService($data);
+        session()->flash('success', 'Service Added!');
+        return redirect()->back();
+
+    }
+
+    public function listServices()
+    {
+        $services = ServicesOffered::fetchServices();
+        return view("services.list",compact('services'));
+    }
+    public function deleteService($id)
+    {
+      
+            $users = ServicesOffered::delete_service($id);
+            session()->flash('success', 'Service deleted!');
+            return redirect()->back();
+     
+    }
+
+    public function editService(Request $request)
+    {
+        $service = $request->input('service');
+        $id = $request->input('id');
+        $data = ["service"=>$service,'id'=>$id];
+        ServicesOffered::editService($data);
+        session()->flash('success', 'Service edited!');
+        return redirect()->back();
     }
     
 }

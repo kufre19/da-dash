@@ -55,13 +55,33 @@
           </a>
           <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
-                  <h6 class="collapse-header">Users section:</h6>
-                  <a class="collapse-item" href="{{url('admin/users/create')}}">Add New User</a>
-                  <a class="collapse-item" href="#">Edit User</a>
-
+                  <h6 class="collapse-header">User settings section:</h6>
+                  <a class="collapse-item" href="{{ url('/dashboard/account/create') }}">Add New Account</a>
+                  <a class="collapse-item" href="{{ url('/dashboard/account/list') }}">Accounts</a>
+                  {{-- <a class="collapse-item" href="#">Rejected</a> --}}
               </div>
           </div>
       </li>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+              aria-expanded="true" aria-controls="collapseFour">
+              <i class="fas fa-wrench"></i>
+              <span>Services</span>
+          </a>
+          <div id="collapseFour" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                  <h6 class="collapse-header">Service section:</h6>
+                  <a class="collapse-item" href="{{ url('/dashboard/service/create') }}">Add New Service</a>
+                  <a class="collapse-item" href="{{ url('/dashboard/service/list') }}">Services Offered</a>
+                  {{-- <a class="collapse-item" href="#">Rejected</a> --}}
+              </div>
+          </div>
+      </li>
+
+
+
 
 
 
