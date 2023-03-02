@@ -22,6 +22,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/custom/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    @yield("extraLinks")
 </head>
 
 <body id="page-top">
@@ -65,6 +66,7 @@
    
 
     @include('layouts.custom.js_scripts')
+    
 
 </body>
 

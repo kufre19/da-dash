@@ -39,7 +39,8 @@
           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Laundry section:</h6>
-                  <a class="collapse-item" href="#">New</a>
+                  <a class="collapse-item" href="{{ url('/dashboard/laundry/create') }}">New</a>
+                  <a class="collapse-item" href="#">Add Images to Laundry</a>
                   <a class="collapse-item" href="#">Completed</a>
 
               </div>

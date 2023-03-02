@@ -6,7 +6,7 @@ use App\Models\ServicesOffered;
 use App\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 
 trait AdminFunctions 
 {
@@ -111,5 +111,8 @@ trait AdminFunctions
         session()->flash('success', 'Service edited!');
         return redirect()->back();
     }
+
+
+   
     
 }

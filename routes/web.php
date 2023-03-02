@@ -51,6 +51,11 @@ Route::group(['middleware'=>"auth",'prefix'=>"dashboard"], function(){
     Route::post("/customers/edit/",[AdminController::class,"edit_customers"]);
 
 
+    // laundry
+    Route::get("/laundry/create/",[AdminController::class,"laundry_create_page"]);
+
+
+
 
 
 
