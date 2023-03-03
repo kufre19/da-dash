@@ -53,6 +53,8 @@ Route::group(['middleware'=>"auth",'prefix'=>"dashboard"], function(){
 
     // laundry
     Route::get("/laundry/create/",[AdminController::class,"laundry_create_page"]);
+    Route::post("/laundry/create/",[AdminController::class,"laundry_create"]);
+
 
 
 
