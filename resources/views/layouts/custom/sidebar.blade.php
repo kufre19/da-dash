@@ -41,7 +41,7 @@
                   <h6 class="collapse-header">Laundry section:</h6>
                   <a class="collapse-item" href="{{ url('/dashboard/laundry/create') }}">New</a>
                   <a class="collapse-item" href="#">Add Images to Laundry</a>
-                  <a class="collapse-item" href="#">Completed</a>
+                  <a class="collapse-item" href="#">Laundry Orders</a>
 
               </div>
           </div>

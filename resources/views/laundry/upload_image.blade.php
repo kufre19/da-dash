@@ -20,7 +20,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Add New Laundry Order</h1>
+        <h1 class="h3 mb-4 text-gray-800">Add Images To Laundry Basket</h1>
 
     </div>
     <!-- /.container-fluid -->
@@ -49,25 +49,20 @@
                         {{-- end of the alert --}}
 
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">New Laundry Order For:</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Upload Images:</h1>
                         </div>
                         <form id="laundry_form" class="user">
                             @csrf
 
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <label for="mySelect">Customer</label>
+                                    <label for="mySelect">Laundry Order:</label>
 
 
                                     <select id="mySelect" name="customer" class=" form-control ">
 
-                                        @if (session()->has('laundry_order_info'))
-                                            @if (session()->get('laundry_order_info')['customer'] != '')
-                                                <option value="{{ session()->get('laundry_order_info')['customer'] }}"
-                                                    selected></option>
-                                            @endif
-                                        @endif
-                                        @foreach ($customers as $customer)
+                                       
+                                        @foreach ($orders as $order)
                                             <option value="{{ $customer->id }}">{{ $customer->name }}
                                                 ({{ $customer->phone }})
                                             </option>
