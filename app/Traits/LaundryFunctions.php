@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Customers;
 use App\Models\Laundry;
+use App\Models\LaundryImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -183,12 +184,55 @@ trait LaundryFunctions {
 
     public function laundry_gallery($id)
     {
+        $image_model = new LaundryImages();
+        $images = $image_model->select("image_path","name")->where('order_number',$id)->get();
 
+        if($images->count() < 1)
+        {
+            return redirect()->back();
+        }
+
+        return view("laundry.laundry_gallery",compact("images"));
     }
 
     public function laundry_image_upload_page()
     {
-        return view("laundry.upload_image");
+        $laundry_model = new Laundry();
+        $orders = $laundry_model->select("order_number")->get();
+        return view("laundry.upload_image",compact("orders"));
     }
+
+    public function laundry_image_upload(Request $request)
+    {
+       
+        $order_number = $request->input("order_number");
+        
+        if ($request->hasfile('images')) {
+            foreach ($request->file('images') as $image) {
+                $name = $image->getClientOriginalName();
+                $ext = $image->extension();
+            
+                $new_name = time() . "." . $ext;
+                $path = $image->storeAs('laundry_images', $new_name, 'public');
+                $laundryImage = new LaundryImages();
+                $laundryImage->name = $new_name;
+                $laundryImage->order_number = $order_number;
+                $laundryImage->image_path = $path;
+                $laundryImage->save();
+            }
+        }
+
+        $laundry_model = new Laundry();
+        $laundry_model->where("order_number",$order_number)
+        ->update([
+            "image_uploaded"=>1
+        ]);
+    
+        return redirect()->back()->with('success', 'Images uploaded successfully.');
+    }
+
+
+
+   
 
 }
