@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\DB;
 trait AdminFunctions 
 {
 
+    public function Admin_dashboard()
+    {
+        $sales_count = $this->getCurrentMonthSales();
+        $customer_count = $this->customer_count();
+        
+        return view("admin.dashboard",compact("sales_count","customer_count"));
+    }
+
     public function createUserAccount_page()
     {
         $roles = Config::get('user_roles');

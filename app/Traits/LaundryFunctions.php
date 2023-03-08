@@ -7,8 +7,10 @@ use App\Models\Laundry;
 use App\Models\LaundryImages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
-trait LaundryFunctions {
+trait LaundryFunctions
+{
 
 
     public function laundry_create_page()
@@ -16,7 +18,7 @@ trait LaundryFunctions {
         // dd(session()->get('laundry_basket'));
         $customer_model = new Customers();
         $customers = $customer_model->get();
-        return view("laundry.create",compact("customers"));
+        return view("laundry.create", compact("customers"));
     }
 
 
@@ -35,12 +37,10 @@ trait LaundryFunctions {
         $laundry_model->order_number = $this->generate_order_id();
 
 
-       $laundry_model->save();
-       $this->laundry_basket_clear();
+        $laundry_model->save();
+        $this->laundry_basket_clear();
 
-        return redirect()->to("dashboard/laundry/basket/preview"."/" .$laundry_model->order_number);
-
-
+        return redirect()->to("dashboard/laundry/basket/preview" . "/" . $laundry_model->order_number);
     }
 
     public function laundry_basket_remove($id)
@@ -49,9 +49,8 @@ trait LaundryFunctions {
         $laundry_basket = session()->get("laundry_basket");
         unset($laundry_basket[$id]);
         $laundry_basket = array_values($laundry_basket);
-        session()->put("laundry_basket",$laundry_basket);
-        return response()->json([],200);
-
+        session()->put("laundry_basket", $laundry_basket);
+        return response()->json([], 200);
     }
 
     public function laundry_basket_add(Request $request)
@@ -63,41 +62,40 @@ trait LaundryFunctions {
         $quantity = $request->input('quantity');
         $cost = $request->input('cost');
 
-        $laundry_order_info = ['customer'=>$customer,'laundry_date'=>$laundry_date];
-        session()->put("laundry_order_info",$laundry_order_info);
+        $laundry_order_info = ['customer' => $customer, 'laundry_date' => $laundry_date];
+        session()->put("laundry_order_info", $laundry_order_info);
 
         if ($laundry_type == "") {
             $laundry_type = "NA";
         }
+        if ($description == "") {
+            $description = "NA";
+        }
 
-        if(session()->has("laundry_basket"))
-        {
+        if (session()->has("laundry_basket")) {
             $laundry_basket = session()->get("laundry_basket");
-        }else{
-            session()->put("laundry_basket",[]);
+        } else {
+            session()->put("laundry_basket", []);
             $laundry_basket = session()->get("laundry_basket");
         }
 
         $data = [
-            'description'=>$description,
-            'laundry_type'=>$laundry_type,
-            'quantity'=>$quantity,"cost"=>$cost];
+            'description' => $description,
+            'laundry_type' => $laundry_type,
+            'quantity' => $quantity, "cost" => $cost
+        ];
 
-         array_push($laundry_basket,$data);
-        session()->put("laundry_basket",$laundry_basket);
+        array_push($laundry_basket, $data);
+        session()->put("laundry_basket", $laundry_basket);
         $id = count(session()->get("laundry_basket")) - 1;
-            $response_data = [
-                "message"=>"laundry added!","type"=>"success",
-                'description'=>$description,
-                'laundry_type'=>$laundry_type,
-                'quantity'=>$quantity
-                ,"cost"=>$cost,
-                "id"=>$id
-            ];
-        return response()->json($response_data,200);
-
-
-
+        $response_data = [
+            "message" => "laundry added!", "type" => "success",
+            'description' => $description,
+            'laundry_type' => $laundry_type,
+            'quantity' => $quantity, "cost" => $cost,
+            "id" => $id
+        ];
+        return response()->json($response_data, 200);
     }
 
     public function laundry_basket_clear()
@@ -105,7 +103,6 @@ trait LaundryFunctions {
         Session::forget("laundry_basket");
         Session::forget("laundry_order_info");
         return redirect()->back();
-
     }
 
     public function basket_total_cost()
@@ -113,57 +110,62 @@ trait LaundryFunctions {
         $laundry_basket = session()->get("laundry_basket");
         $total = 0;
         foreach ($laundry_basket as $key => $value) {
-           $cost = $value['quantity'] * $value['cost'];
-           $total += $cost;
+            $cost = $value['quantity'] * $value['cost'];
+            $total += $cost;
         }
-        return number_format($total,2);
-
+        return $total;
     }
 
 
     public function laundry_preview_page($id = "")
     {
-        
-        if($id != "")
-        {
-           
-            $laundry_model = new Laundry();
-            $laundry = $laundry_model->where("order_number",$id)->first();
 
-            if(!$laundry)
-            {
+        if ($id != "") {
+
+            $laundry_model = new Laundry();
+            $laundry = $laundry_model->where("order_number", $id)->first();
+
+            if (!$laundry) {
                 return redirect()->to("dashboard/laundry/create/");
             }
 
             $customer_model = new Customers();
-            $customer = $customer_model->where("id",$laundry->customer_id)->first();
+            $customer = $customer_model->where("id", $laundry->customer_id)->first();
 
             $order_date = $laundry->date;
-            $order_items =json_decode($laundry->order_items, true);
+            $order_items = json_decode($laundry->order_items, true);
             $item_count = count($order_items);
             $order_number = $laundry->order_number;
+            $order_status = $laundry->status;
             $total_cost = $laundry->total_cost;
             $image_uploaded = $laundry->image_uploaded;
 
 
 
-            return view("laundry.preview",compact("customer","order_date","order_items","order_number","total_cost","item_count","image_uploaded"));
-
-        }elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
+            return view("laundry.preview", compact(
+                "customer",
+                "order_date",
+                "order_items",
+                "order_number",
+                "total_cost",
+                "item_count",
+                "image_uploaded",
+                "order_status"
+            ));
+        } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
             $order_info = session()->get("laundry_order_info");
             $customer_id = $order_info['customer'];
             $order_date = $order_info['laundry_date'];
-            $total_cost = $this->basket_total_cost();
-    
+            $total_cost = number_format($this->basket_total_cost(), 2);
+
             $customer_model = new Customers();
-            $customer = $customer_model->where("id",$customer_id)->first();
-    
-            
-            return view("laundry.preview",compact("customer","order_date","total_cost"));
-        }else{
+            $customer = $customer_model->where("id", $customer_id)->first();
+
+
+            return view("laundry.preview", compact("customer", "order_date", "total_cost"));
+        } else {
             return redirect()->back();
         }
-       
     }
 
 
@@ -171,13 +173,12 @@ trait LaundryFunctions {
     {
         $laundry_model = new Laundry();
         $new_id =  random_int(100000, 999999);;
-        
-        $check = $laundry_model->where("order_number",$new_id)->first();
-      
-        if($check != null)
-        {
+
+        $check = $laundry_model->where("order_number", $new_id)->first();
+
+        if ($check != null) {
             $this->generate_order_id();
-        }else{
+        } else {
             return $new_id;
         }
     }
@@ -185,54 +186,88 @@ trait LaundryFunctions {
     public function laundry_gallery($id)
     {
         $image_model = new LaundryImages();
-        $images = $image_model->select("image_path","name")->where('order_number',$id)->get();
+        $images = $image_model->select("id", "image_path", "name")->where('order_number', $id)->get();
 
-        if($images->count() < 1)
-        {
+        if ($images->count() < 1) {
             return redirect()->back();
         }
 
-        return view("laundry.laundry_gallery",compact("images"));
+        return view("laundry.laundry_gallery", compact("images"));
+    }
+
+    public function laundry_image_delete($id)
+    {
+        $image_model = new LaundryImages();
+        $image = $image_model->where('id', $id)->first();
+
+        if (!$image) {
+            return redirect()->back();
+        } else {
+            Storage::disk('local')->delete($image->image_path);
+            $image = $image_model->delete($id);
+            return redirect()->back();
+            
+        }
     }
 
     public function laundry_image_upload_page()
     {
         $laundry_model = new Laundry();
-        $orders = $laundry_model->select("order_number")->get();
-        return view("laundry.upload_image",compact("orders"));
+        $orders = $laundry_model->select("order_number")->orderBy("created_at", 'DESC')->get();
+        return view("laundry.upload_image", compact("orders"));
     }
 
     public function laundry_image_upload(Request $request)
     {
-       
+
         $order_number = $request->input("order_number");
-        
+
         if ($request->hasfile('images')) {
             foreach ($request->file('images') as $image) {
                 $name = $image->getClientOriginalName();
                 $ext = $image->extension();
-            
-                $new_name = time() . "." . $ext;
-                $path = $image->storeAs('laundry_images', $new_name, 'public');
-                $laundryImage = new LaundryImages();
-                $laundryImage->name = $new_name;
-                $laundryImage->order_number = $order_number;
-                $laundryImage->image_path = $path;
-                $laundryImage->save();
+
+                try {
+                    $new_name = time() . "." . $ext;
+                    $path = $image->storeAs('laundry_images', $new_name, 'public');
+                    $laundryImage = new LaundryImages();
+                    $laundryImage->name = $new_name;
+                    $laundryImage->order_number = $order_number;
+                    $laundryImage->image_path = $path;
+                    $laundryImage->save();
+                } catch (\Throwable $th) {
+                    dd($th);
+                }
             }
         }
 
         $laundry_model = new Laundry();
-        $laundry_model->where("order_number",$order_number)
-        ->update([
-            "image_uploaded"=>1
-        ]);
-    
+        $laundry_model->where("order_number", $order_number)
+            ->update([
+                "image_uploaded" => 1
+            ]);
+
         return redirect()->back()->with('success', 'Images uploaded successfully.');
     }
 
+    public function laundry_orders_display_page()
+    {
+        $laundry_model = new Laundry();
+        $orders = $laundry_model->fetch_orders();
+        return view("laundry.orders", compact("orders"));
+    }
 
+    public function update_order_status(Request $request)
+    {
+        $order_status = $request->input("status");
+        $order_number = $request->input("order_number");
 
-   
+        $laundry_model = new Laundry();
+        $laundry_model->where("order_number", $order_number)
+            ->update([
+                "status" => $order_status
+            ]);
 
+        return redirect()->back();
+    }
 }

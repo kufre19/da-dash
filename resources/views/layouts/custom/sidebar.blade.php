@@ -41,7 +41,7 @@
                   <h6 class="collapse-header">Laundry section:</h6>
                   <a class="collapse-item" href="{{ url('/dashboard/laundry/create') }}">New</a>
                   <a class="collapse-item" href="{{ url('/dashboard/laundry/basket/gallery/upload') }}">Add Images to Laundry</a>
-                  <a class="collapse-item" href="#">Laundry Orders</a>
+                  <a class="collapse-item" href="{{ url('/dashboard/laundry/orders') }}">Laundry Orders</a>
 
               </div>
           </div>
@@ -94,6 +94,21 @@
                 <a class="collapse-item" href="{{ url('/dashboard/customers/create') }}">Add New Customer</a>
                 <a class="collapse-item" href="{{ url('/dashboard/customers/list/') }}"> Customer List</a>
                 {{-- <a class="collapse-item" href="#">Rejected</a> --}}
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSix"
+            aria-expanded="true" aria-controls="collapseSix">
+            <i class="fas fa-coins"></i>
+            <span>Sales</span>
+        </a>
+        <div id="collapseSix" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Sales section:</h6>
+                <a class="collapse-item" href="{{ url('/dashboard/sales/view') }}">Sales</a>
+                
             </div>
         </div>
     </li>

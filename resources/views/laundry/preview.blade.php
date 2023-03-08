@@ -30,6 +30,39 @@
             <!-- Nested Row within Card Body -->
             <div class="row">
                 <div class="col-12">
+                    @if (isset($order_status))
+                        <form action="{{ url('dashboard/laundry/orders/update/status') }}" method="POST" class="users">
+                            @csrf
+
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select class="form-control" id="status" name="status">
+
+                                    <option value="processing" {{ $order_status == 'processing' ? 'selected' : '' }}>
+                                        Processing
+                                    </option>
+                                    <option value="completed" {{ $order_status == 'completed' ? 'selected' : '' }}>Completed
+                                    </option>
+                                    <option value="cancelled" {{ $order_status == 'cancelled' ? 'selected' : '' }}>Cancelled
+                                    </option>
+                                </select>
+                                <input type="hidden" name="order_number" value="{{ $order_number }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Status</button>
+                        </form>
+                    @endif
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-12">
                     <div class="p-5">
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -53,6 +86,8 @@
                                     <div class="col-6">
                                         <p><strong>Customer Name:</strong> {{ $customer->name }}</p>
                                         <p><strong>Order Date:</strong> {{ $order_date }}</p>
+                                        <p><strong>Order Status:</strong> {{ $order_status ?? 'NA' }}</p>
+
                                     </div>
                                     <div class="col-6 text-right">
                                         <p><strong>Order Number:</strong> {{ $order_number ?? 'NA' }}</p>
@@ -94,21 +129,18 @@
 
                                         <tr>
                                             <td colspan="4" class="text-right">
-                                                <strong>Total Item Count:</strong><br>
+                                                <strong>Total Cost:</strong><br>
                                                 <strong>Total Item Count:</strong>
                                             </td>
                                             <td><strong>{{ $total_cost }}</strong><br>
-                                                <strong>{{ $item_count }}</strong>
+                                                <strong>{{ $item_count ?? 'NA' }}</strong>
                                             </td>
                                         </tr>
 
 
                                     </tbody>
                                 </table>
-                                @if (isset($order_number))
-                                    <button class="btn btn-primary btn-block" id="print-receipt-btn"
-                                        onclick="printReceipt()">Print Receipt</button>
-                                @endif
+
                             </div>
 
 
@@ -118,11 +150,16 @@
                             <hr>
                             <div class="container">
                                 @if (isset($order_number))
+                                    <button class="btn btn-success btn-block" id="print-receipt-btn"
+                                        onclick="printReceipt()">Print Receipt</button>
+                                @endif
+                                @if (isset($order_number))
                                     <button class="btn btn-primary btn-block" id="print-receipt-btn"
-                                        data-label-data="{{ $order_number }}">Print Tags</button>
+                                        data-label-data="{{ $order_number }}"
+                                        onclick="printLabel({{ $order_number }})">Print Tags</button>
 
                                     @if (isset($image_uploaded) && $image_uploaded == 1)
-                                        <a href="{{ url('dashboard/laundry/basket/gallery'."/". $order_number) }}"
+                                        <a href="{{ url('dashboard/laundry/basket/gallery/view' . '/' . $order_number) }}"
                                             class="btn btn-primary btn-user btn-block">View Laundry Gallery</a>
                                     @endif
                                 @else
@@ -148,14 +185,6 @@
 @section('extraJS')
     <!-- Load jQuery and Select2 JavaScript libraries from a CDN or include them in your project -->
 
-    <script src="{{ asset('css/custom/select2/dist/js/select2.min.js') }}"></script>
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-
-
 
 
     <script type="text/javascript">
@@ -167,23 +196,20 @@
             document.body.innerHTML = originalContents;
         }
 
-        document.querySelector('.print-btn').addEventListener('click', function() {
-            // get the label data from the button data attribute
-            const labelData = this.getAttribute('data-label-data');
-
-            // call the print function with the label data
-            printLabel(labelData);
-        });
 
         function printLabel(labelData) {
-            // create a new window for the label
-            const labelWindow = window.open('', '', 'width=300,height=300');
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = labelData;
 
-            // write the label data to the new window
-            labelWindow.document.write(`<div>${labelData}</div>`);
+            // Add print styles to the page
+            var printCSS = '@media print { @page { size: 4in 6in; } }';
+            var printStyle = document.createElement('style');
+            printStyle.type = 'text/css';
+            printStyle.appendChild(document.createTextNode(printCSS));
+            document.head.appendChild(printStyle);
 
-            // print the label
-            labelWindow.print();
+            window.print();
+            document.body.innerHTML = originalContents;
         }
     </script>
 @endsection

@@ -47,7 +47,7 @@
 
                                     <select name="role" id="selectrole" class="form-control" required>
 
-                                        <option value="Super Admin" selected>Select Account Role</option>
+                                        <option value="Admin" selected>Select Account Role</option>
                                         @foreach ($roles as  $role)
                                             <option value="{{ $role }}">{{ $role }}</option>
                                         @endforeach

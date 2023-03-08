@@ -31,6 +31,9 @@
                 <div class="card gallery">
                     
                     <a href="{{ asset('storage/'.$image->image_path) }}"  data-lightbox="gallery-item"><img src="{{ asset('storage/'.$image->image_path) }}"  class="card-img-top"></a>
+                    <div class="card-footer">
+                        <a href="{{url('dashboard/laundry/basket/gallery/delete'."/".$image->id)}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    </div>
                 </div>
             </div>
         @endforeach
