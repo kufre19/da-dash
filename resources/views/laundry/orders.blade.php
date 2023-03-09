@@ -9,7 +9,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Laundry Order Preview <a href=""></a></h1>
+        <h1 class="h3 mb-4 text-gray-800">Laundry Orders <a href=""></a></h1>
 
     </div>
     <!-- /.container-fluid -->
@@ -27,6 +27,7 @@
                 <th>Customer Name</th>
                 <th>Customer phone</th>
                 <th>Order Date</th>
+                <th>Payment Mode</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -38,6 +39,7 @@
                     <td>{{$order->name}}</td>
                     <td>{{$order->phone}}</td>
                     <td>{{$order->date}}</td>
+                    <td>{{$order->payment_mode}}</td>
                     <td>{{$order->status}}</td>
                     <td>
                         <a href="{{url('/dashboard/laundry/basket/preview').'/'.$order->order_number}}" class="btn btn-primary">Preview</a>

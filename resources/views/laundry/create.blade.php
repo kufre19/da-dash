@@ -104,6 +104,23 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <select  name="payment_mode" class=" form-control " required>
+                                        @if (session()->has('laundry_order_info'))
+                                        @if (session()->get('laundry_order_info')['payment_mode'] != '')
+                                        <option value="{{session()->get('laundry_order_info')['payment_mode']}}" selected>Select Payment Mode</option>
+                                        @endif
+                                        @endif
+                                        <option disabled>Select Payment Mode</option>
+
+                                        <option value="Bank Transfer">Bank Transfer</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="ATM Card">ATM Card</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <hr>
                         <a href="{{url('dashboard/laundry/basket/clear')}}" class="btn btn-danger btn-user btn-block">Clear Basket</a>
 

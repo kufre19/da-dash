@@ -80,16 +80,19 @@
                         <div id="laundry_form" class="user">
                             <div class="receipt" id="receipt">
                                 <h2 class="text-center mb-4">{{ env('APP_NAME') }} Order Receipt</h2>
-                                <h5 class="text-center mb-4">location</h5>
+                                <h5 class="text-center mb-4">company address</h5>
 
                                 <div class="row mb-4">
                                     <div class="col-6">
                                         <p><strong>Customer Name:</strong> {{ $customer->name }}</p>
                                         <p><strong>Order Date:</strong> {{ $order_date }}</p>
                                         <p><strong>Order Status:</strong> {{ $order_status ?? 'NA' }}</p>
+                                       
+
 
                                     </div>
                                     <div class="col-6 text-right">
+                                        <p><strong>Payment Mode:</strong> {{ $payment_mode ?? 'NA' }}</p>
                                         <p><strong>Order Number:</strong> {{ $order_number ?? 'NA' }}</p>
                                         <p><strong>Phone Number:</strong> {{ $customer->phone }}</p>
                                     </div>

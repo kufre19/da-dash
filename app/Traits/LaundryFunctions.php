@@ -34,6 +34,7 @@ trait LaundryFunctions
         $laundry_model->customer_id = $order_info['customer'];
         $laundry_model->date = $order_info['laundry_date'];
         $laundry_model->total_cost = $total_cost;
+        $laundry_model->payment_mode =$order_info['payment_mode'];
         $laundry_model->order_number = $this->generate_order_id();
 
 
@@ -61,8 +62,10 @@ trait LaundryFunctions
         $laundry_date = $request->input('laundry_date');
         $quantity = $request->input('quantity');
         $cost = $request->input('cost');
+        $payment_mode = $request->input('payment_mode');
 
-        $laundry_order_info = ['customer' => $customer, 'laundry_date' => $laundry_date];
+
+        $laundry_order_info = ['customer' => $customer, 'laundry_date' => $laundry_date,"payment_mode"=>$payment_mode];
         session()->put("laundry_order_info", $laundry_order_info);
 
         if ($laundry_type == "") {
@@ -139,6 +142,7 @@ trait LaundryFunctions
             $order_status = $laundry->status;
             $total_cost = $laundry->total_cost;
             $image_uploaded = $laundry->image_uploaded;
+            $payment_mode = $laundry->payment_mode;
 
 
 
@@ -150,7 +154,8 @@ trait LaundryFunctions
                 "total_cost",
                 "item_count",
                 "image_uploaded",
-                "order_status"
+                "order_status",
+                "payment_mode"
             ));
         } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
             $order_info = session()->get("laundry_order_info");
@@ -203,8 +208,8 @@ trait LaundryFunctions
         if (!$image) {
             return redirect()->back();
         } else {
-            Storage::disk('local')->delete($image->image_path);
-            $image = $image_model->delete($id);
+            // Storage::disk('local')->delete($image->image_path);
+            $image = $image_model->where("id",$id)->delete();
             return redirect()->back();
             
         }
