@@ -300,6 +300,17 @@
                                                 </label>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>
+                                                    <input type="radio" name="laundry_type" value="Gown">
+                                                    <img src="https://static.thenounproject.com/attribution/3028777-600.png"
+                                                        alt="Gown icon" style="width: 32px; height: 32px;">
+                                                    <span> Gown</span>
+                                                </label>
+                                            </div>
+                                           
+                                        </div>
                                     </div>
 
                                 </div>
