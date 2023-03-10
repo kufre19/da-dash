@@ -20,7 +20,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Laundry Order Preview <a href=""></a></h1>
+        <h1 class="h3 mb-4 text-gray-800">Welcome, {{Auth::user()->name}}! <a href=""></a></h1>
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
