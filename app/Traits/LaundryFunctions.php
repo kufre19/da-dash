@@ -233,7 +233,7 @@ trait LaundryFunctions
                 $ext = $image->extension();
 
                 try {
-                    $new_name = time() . "." . $ext;
+                    $new_name = $name."_".time() . "." . $ext;
                     $path = $image->storeAs('laundry_images', $new_name, 'public');
                     $laundryImage = new LaundryImages();
                     $laundryImage->name = $new_name;
