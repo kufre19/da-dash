@@ -52,6 +52,7 @@
                             <h1 class="h4 text-gray-900 mb-4">New Laundry Order For:</h1>
                         </div>
                         <form id="laundry_form" class="user">
+
                             @csrf
 
                             <div class="form-group row">
@@ -86,10 +87,10 @@
                                             @if (session()->get('laundry_order_info')['laundry_date'] != '')
                                                 <input type="text" name="laundry_date" class="form-control"
                                                     value="{{ session()->get('laundry_order_info')['laundry_date'] }}"
-                                                    id="datepicker">
+                                                    id="datepicker" autocomplete="off">
                                             @else
                                                 <input type="text" name="laundry_date" class="form-control"
-                                                    id="datepicker">
+                                                    id="datepicker" autocomplete="off">
                                             @endif
                                         @else
                                             <input type="text" name="laundry_date" class="form-control" id="datepicker">
