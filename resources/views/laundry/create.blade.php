@@ -315,7 +315,7 @@
 
                                 <label for="qty">Quantity</label>
                                 <input type="number" name="quantity" id="qty" class="form-control"
-                                    placeholder="number of materials" required>
+                                    placeholder="number of materials" autocomplete="off" required>
                             </div>
 
                             <div class="col-sm-6 mb-3 mb-sm-0">
