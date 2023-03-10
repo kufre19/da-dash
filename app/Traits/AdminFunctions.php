@@ -2,10 +2,12 @@
 
 namespace App\Traits;
 
+use App\Models\Laundry;
 use App\Models\ServicesOffered;
 use App\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 trait AdminFunctions 
@@ -13,10 +15,23 @@ trait AdminFunctions
 
     public function Admin_dashboard()
     {
+        if(Auth::user()->role != "Admin")
+        {
+            return $this->Admin_staff();
+        }
         $sales_count = $this->getCurrentMonthSales();
         $customer_count = $this->customer_count();
         
         return view("admin.dashboard",compact("sales_count","customer_count"));
+    }
+
+    public function Admin_staff()
+    {
+        $laundry_model = new Laundry();
+        $laundries = $laundry_model->select("order_number")->get();
+
+        return view("admin.dashboard",compact("laundries"));
+
     }
 
     public function createUserAccount_page()

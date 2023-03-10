@@ -1,79 +1,91 @@
-<div class="row">
+@extends('layouts.custom.app')
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Customers </div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$customer_count['customer_count']}}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-users fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+@section('extraLinks')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Earnings (This Month)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{env("CURRENCY_SYMBOL")}}{{ $sales_count['total_amount']}}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <style>
+        #SelExample {
+            width: 200px;
+        }
+    </style>
+    <!-- Load Select2 from a CDN or include the Select2 library in your project -->
+    <link href="{{ asset('css/custom/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+@endsection
 
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Orders (Processing)
-                        </div>
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $sales_count['processing_orders']}}</div>
-                            </div>
-                           
+@section('page_content')
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-4 text-gray-800">Laundry Order Preview <a href=""></a></h1>
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="p-5">
+
+                            <form action="{{ url('dashboard/laundry/orders/view/') }}" method="POST" class="users">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="status">Status:</label>
+                                    <select id="mySelect" class="form-control" id="status" name="order_number">
+                                        @foreach ($laundries as $laundry)
+                                            <option value="{{ $laundry->order_number }}">{{ $laundry->order_number }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                <button type="submit" class="btn btn-primary">View Order</button>
+                            </form>
+
                         </div>
                     </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pending Requests</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
-                </div>
+
             </div>
         </div>
+
     </div>
-</div>
+    <!-- /.container-fluid -->
+@endsection
+
+
+
+
+@section('extraJS')
+    <!-- Load jQuery and Select2 JavaScript libraries from a CDN or include them in your project -->
+
+    <script src="{{ asset('css/custom/select2/dist/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#mySelect').select2();
+        });
+    </script>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(function() {
+            $('#datepicker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+    </script>
+
+
+
+   
+   
+@endsection

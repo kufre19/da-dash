@@ -30,27 +30,33 @@
             <!-- Nested Row within Card Body -->
             <div class="row">
                 <div class="col-12">
-                    @if (isset($order_status))
-                        <form action="{{ url('dashboard/laundry/orders/update/status') }}" method="POST" class="users">
-                            @csrf
+                    <div class="p-5">
 
-                            <div class="form-group">
-                                <label for="status">Status:</label>
-                                <select class="form-control" id="status" name="status">
+                        @if (isset($order_status))
+                            <form action="{{ url('dashboard/laundry/orders/update/status') }}" method="POST"
+                                class="users">
+                                @csrf
 
-                                    <option value="processing" {{ $order_status == 'processing' ? 'selected' : '' }}>
-                                        Processing
-                                    </option>
-                                    <option value="completed" {{ $order_status == 'completed' ? 'selected' : '' }}>Completed
-                                    </option>
-                                    <option value="cancelled" {{ $order_status == 'cancelled' ? 'selected' : '' }}>Cancelled
-                                    </option>
-                                </select>
-                                <input type="hidden" name="order_number" value="{{ $order_number }}">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Update Status</button>
-                        </form>
-                    @endif
+                                <div class="form-group">
+                                    <label for="status">Status:</label>
+                                    <select class="form-control" id="status" name="status">
+
+                                        <option value="processing" {{ $order_status == 'processing' ? 'selected' : '' }}>
+                                            Processing
+                                        </option>
+                                        <option value="completed" {{ $order_status == 'completed' ? 'selected' : '' }}>
+                                            Completed
+                                        </option>
+                                        <option value="cancelled" {{ $order_status == 'cancelled' ? 'selected' : '' }}>
+                                            Cancelled
+                                        </option>
+                                    </select>
+                                    <input type="hidden" name="order_number" value="{{ $order_number }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Status</button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
             </div>
 
@@ -87,7 +93,7 @@
                                         <p><strong>Customer Name:</strong> {{ $customer->name }}</p>
                                         <p><strong>Order Date:</strong> {{ $order_date }}</p>
                                         <p><strong>Order Status:</strong> {{ $order_status ?? 'NA' }}</p>
-                                       
+
 
 
                                     </div>

@@ -275,4 +275,12 @@ trait LaundryFunctions
 
         return redirect()->back();
     }
+
+    public function view_laundry_order(Request $request)
+    {
+        $order_number = $request->input("order_number");
+
+        // dd("dashboard/laundry/basket/preview"."/".$order_number);
+        return redirect()->to("dashboard/laundry/basket/preview"."/".$order_number);
+    }
 }
