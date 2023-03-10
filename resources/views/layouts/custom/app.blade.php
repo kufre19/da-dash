@@ -22,7 +22,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/custom/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    @yield("extraLinks")
+    @yield('extraLinks')
 </head>
 
 <body id="page-top">
@@ -30,8 +30,17 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        @include('layouts.custom.sidebar')
-      
+
+
+
+
+        @if (Auth::user()->role == 'Admin')
+            @include('layouts.custom.sidebar')
+        @else
+            @include('layouts.custom.sidebar_staff')
+        @endif
+
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -48,8 +57,8 @@
             </div>
             <!-- End of Main Content -->
 
-    @include('layouts.custom.footer')
-           
+            @include('layouts.custom.footer')
+
 
         </div>
         <!-- End of Content Wrapper -->
@@ -63,10 +72,10 @@
     </a>
 
     @include('layouts.custom.modals')
-   
+
 
     @include('layouts.custom.js_scripts')
-    
+
 
 </body>
 

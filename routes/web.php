@@ -38,24 +38,30 @@ Route::get('/', function () {
 
 Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
 
+    Route::group(['middleware' => "auth_admin"], function () {
+        // accounts
+        Route::get("/account/create", [AdminController::class, "createUserAccount_page"]);
+        Route::post("/account/create", [AdminController::class, "createUserAccount"]);
+        Route::get("/account/list", [AdminController::class, "listAccounts"]);
+        Route::get("/account/edit/{id}", [AdminController::class, "editAccount_page"]);
+        Route::post("/account/edit/", [AdminController::class, "editUserAccount"]);
+        Route::post("/account/delete/{id}", [AdminController::class, "deleAccount"]);
+
+        // services
+        Route::get("/service/create/", [AdminController::class, "showServicePage"]);
+        Route::get("/service/list/", [AdminController::class, "listServices"]);
+        Route::post("/service/create/", [AdminController::class, "createService"]);
+        Route::get("/service/edit/{id}", [AdminController::class, "showServiceEditPage"]);
+        Route::post("/service/delete/{id}", [AdminController::class, "deleteService"]);
+        Route::post("/service/edit/", [AdminController::class, "editService"]);
+    });
+
     Route::get('/', [AdminController::class, "Admin_dashboard"])->name('dashboard');
-    // accounts
-    Route::get("/account/create", [AdminController::class, "createUserAccount_page"]);
-    Route::post("/account/create", [AdminController::class, "createUserAccount"]);
-    Route::get("/account/list", [AdminController::class, "listAccounts"]);
-    Route::get("/account/edit/{id}", [AdminController::class, "editAccount_page"]);
-    Route::post("/account/edit/", [AdminController::class, "editUserAccount"]);
-    Route::post("/account/delete/{id}", [AdminController::class, "deleAccount"]);
 
-    // services
-    Route::get("/service/create/", [AdminController::class, "showServicePage"]);
-    Route::get("/service/list/", [AdminController::class, "listServices"]);
-    Route::post("/service/create/", [AdminController::class, "createService"]);
-    Route::get("/service/edit/{id}", [AdminController::class, "showServiceEditPage"]);
-    Route::post("/service/delete/{id}", [AdminController::class, "deleteService"]);
-    Route::post("/service/edit/", [AdminController::class, "editService"]);
 
-    // customers
+
+
+    // Customer
     Route::get("/customers/create/", [AdminController::class, "add_new_customers_page"]);
     Route::post("/customers/create/", [AdminController::class, "add_new_customers"]);
     Route::get("/customers/list/", [AdminController::class, "list_customers_page"]);
@@ -78,8 +84,6 @@ Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
     Route::post("/laundry/basket/gallery/upload", [AdminController::class, "laundry_image_upload"]);
     Route::get("/laundry/orders/", [AdminController::class, "laundry_orders_display_page"]);
     Route::post("/laundry/orders/update/status", [AdminController::class, "update_order_status"]);
-
-   
 });
 
 require __DIR__ . '/auth.php';

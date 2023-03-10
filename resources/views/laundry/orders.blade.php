@@ -52,6 +52,10 @@
 
 
         </tbody>
+
+        <tfoot>
+            <p>{{$orders->links()}}</p>
+        </tfoot>
     </table>
 @endsection
 

@@ -16,7 +16,7 @@ class Laundry extends Model
         ->join('customers', 'laundries.customer_id', '=', 'customers.id')
         ->select('laundries.*', 'customers.name', 'customers.phone')
         ->orderBy("created_at",'DESC')
-        ->paginate(15);
+        ->paginate(10);
 
         // dd($orders);
 
