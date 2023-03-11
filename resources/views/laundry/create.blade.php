@@ -309,6 +309,14 @@
                                                     <span> Gown</span>
                                                 </label>
                                             </div>
+
+                                            <div class="col-md-6">
+                                                <label>
+                                                    <input type="radio" name="laundry_type" value="Others">
+                                                    
+                                                    <span> Others</span>
+                                                </label>
+                                            </div>
                                            
                                         </div>
                                     </div>

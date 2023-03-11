@@ -92,7 +92,6 @@
                                     <div class="col-6">
                                         <p><strong>Customer Name:</strong> {{ $customer->name }}</p>
                                         <p><strong>Order Date:</strong> {{ $order_date }}</p>
-                                        <p><strong>Order Status:</strong> {{ $order_status ?? 'NA' }}</p>
 
 
 
