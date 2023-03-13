@@ -136,6 +136,13 @@ trait AdminFunctions
     }
 
 
+    public function showShelvesPage()
+    {
+        return view("shelves.create");
+
+    }
+
+
    
     
 }
