@@ -71,10 +71,10 @@
                                     <label for="status">Payment Status:</label>
                                     <select class="form-control" id="status" name="payment_status">
 
-                                        <option value="processing" {{ $payment_status == 'Paid' ? 'selected' : '' }}>
+                                        <option value="Paid" {{ $payment_status == 'Paid' ? 'selected' : '' }}>
                                             Paid
                                         </option>
-                                        <option value="completed" {{ $payment_status == 'Unpaid' ? 'selected' : '' }}>
+                                        <option value="Unpaid" {{ $payment_status == 'Unpaid' ? 'selected' : '' }}>
                                             Unpaid
                                         </option>
                                         {{-- <option value="cancelled" {{ $payment_status == 'cancelled' ? 'selected' : '' }}>

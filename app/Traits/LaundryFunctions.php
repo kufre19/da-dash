@@ -72,7 +72,7 @@ trait LaundryFunctions
         'customer' => $customer, 
         'laundry_date' => $laundry_date,
         "payment_mode"=>$payment_mode,
-        "payment_mode"=>$payment_status
+        "payment_status"=>$payment_status
         ];
         
         session()->put("laundry_order_info", $laundry_order_info);
@@ -174,12 +174,13 @@ trait LaundryFunctions
             $customer_id = $order_info['customer'];
             $order_date = $order_info['laundry_date'];
             $total_cost = number_format($this->basket_total_cost(), 2);
+            $item_count = count(session()->get("laundry_basket"));
 
             $customer_model = new Customers();
             $customer = $customer_model->where("id", $customer_id)->first();
 
 
-            return view("laundry.preview", compact("customer", "order_date", "total_cost"));
+            return view("laundry.preview", compact("customer", "order_date", "total_cost","item_count"));
         } else {
             return redirect()->back();
         }
@@ -283,6 +284,20 @@ trait LaundryFunctions
         $laundry_model->where("order_number", $order_number)
             ->update([
                 "status" => $order_status
+            ]);
+
+        return redirect()->back();
+    }
+
+    public function update_order_payment_status(Request $request)
+    {
+        $order_payment_status = $request->input("payment_status");
+        $order_number = $request->input("order_number");
+
+        $laundry_model = new Laundry();
+        $laundry_model->where("order_number", $order_number)
+            ->update([
+                "payment_status" => $order_payment_status
             ]);
 
         return redirect()->back();

@@ -86,6 +86,7 @@ Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
     Route::post("/laundry/basket/gallery/upload", [AdminController::class, "laundry_image_upload"]);
     Route::get("/laundry/orders/", [AdminController::class, "laundry_orders_display_page"]);
     Route::post("/laundry/orders/update/status", [AdminController::class, "update_order_status"]);
+    Route::post("/laundry/orders/update/payment/status", [AdminController::class, "update_order_payment_status"]);
     Route::post("/laundry/orders/view/", [AdminController::class, "view_laundry_order"]);
 
 });
