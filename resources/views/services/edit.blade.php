@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Add New Service Offered</h1>
+        <h1 class="h3 mb-4 text-gray-800">Edit Service Offered</h1>
 
     </div>
     <!-- /.container-fluid -->
@@ -40,7 +40,7 @@
                           
 
                             <button type="submit" class="btn btn-primary btn-user btn-block">
-                                Add Service
+                                Edit Service
                             </button>
                             <hr>
 

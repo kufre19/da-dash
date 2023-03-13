@@ -81,6 +81,22 @@
           </div>
       </li>
 
+       <!-- Nav Item - Pages Collapse Menu -->
+       <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
+            aria-expanded="true" aria-controls="collapseSeven">
+            <i class="fas fa-table"></i>
+            <span>Shelves</span>
+        </a>
+        <div id="collapseSeven" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Shelf section:</h6>
+                <a class="collapse-item" href="{{ url('/dashboard/shelves/create') }}">Add New Shelf</a>
+                  <a class="collapse-item" href="{{ url('/dashboard/shelves/list') }}">Shelves Available</a>
+            </div>
+        </div>
+    </li>
+
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"

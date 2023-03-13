@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Laundry;
 use App\Models\ServicesOffered;
+use App\Models\Shelf;
 use App\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
@@ -141,6 +142,52 @@ trait AdminFunctions
         return view("shelves.create");
 
     }
+
+    public function createShelves(Request $request)
+    {
+        $shelf = $request->input('shelf');
+       $shelf_model = new Shelf();
+       $shelf_model->name = $shelf;
+       $shelf_model->save();
+        session()->flash('success', 'Shelf Added!');
+        return redirect()->back();
+
+    }
+
+    public function listShelves()
+    {
+        $shelf_model = new Shelf();
+        $shelves = $shelf_model->paginate(15);
+        return view("shelves.list",compact('shelves'));
+    }
+
+    public function deleteShelves($id)
+    {
+      
+        $shelf_model = new Shelf();
+        $shelf_model->where("id",$id)->delete();
+            session()->flash('success', 'Shelf deleted!');
+            return redirect()->back();
+     
+    }
+
+    public function editShelves(Request $request)
+    {
+        $shelf = $request->input('shelf');
+        $id = $request->input('id');
+        $data = ["shelf"=>$shelf,'id'=>$id];
+        Shelf::editShelf($data);
+        session()->flash('success', 'Shelf edited!');
+        return redirect()->back();
+    }
+
+    public function showShelvesEditPage($id)
+    {
+        $shelf = Shelf::fetchShelfById($id);
+        return view("shelves.edit",compact('shelf'));
+
+    }
+
 
 
    

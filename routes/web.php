@@ -57,11 +57,11 @@ Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
 
           // shelves
           Route::get("/shelves/create/", [AdminController::class, "showShelvesPage"]);
-          Route::get("/service/list/", [AdminController::class, "listServices"]);
-          Route::post("/service/create/", [AdminController::class, "createService"]);
-          Route::get("/service/edit/{id}", [AdminController::class, "showServiceEditPage"]);
-          Route::post("/service/delete/{id}", [AdminController::class, "deleteService"]);
-          Route::post("/service/edit/", [AdminController::class, "editService"]);
+          Route::get("/shelves/list/", [AdminController::class, "listShelves"]);
+          Route::post("/shelves/create/", [AdminController::class, "createShelves"]);
+          Route::get("/shelves/edit/{id}", [AdminController::class, "showShelvesEditPage"]);
+          Route::post("/shelves/delete/{id}", [AdminController::class, "deleteShelves"]);
+          Route::post("/shelves/edit/", [AdminController::class, "editShelves"]);
     });
 
     Route::get('/', [AdminController::class, "Admin_dashboard"])->name('dashboard');

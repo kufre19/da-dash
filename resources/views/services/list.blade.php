@@ -31,7 +31,7 @@
                     <td>{{ $service->service }}</td>
 
                     <td>
-                        <a href="{{ url('dashboard/service/edit/'.$service->id) }}" class="btn btn-primary">Edit</a>
+                        {{-- <a href="{{ url('dashboard/service/edit/'.$service->id) }}" class="btn btn-primary">Edit</a> --}}
                         <form action="{{ url('dashboard/service/delete/'.$service->id) }}" method="POST" style="display: inline;">
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>

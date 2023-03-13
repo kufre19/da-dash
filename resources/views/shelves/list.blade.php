@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Services</h1>
+        <h1 class="h3 mb-4 text-gray-800">Shelves</h1>
 
     </div>
     <!-- /.container-fluid -->
@@ -25,14 +25,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($services as $service)
+            @foreach ($shelves as $shelf)
                 <tr>
 
-                    <td>{{ $service->service }}</td>
+                    <td>{{ $shelf->name }}</td>
 
                     <td>
-                        <a href="{{ url('dashboard/service/edit/'.$service->id) }}" class="btn btn-primary">Edit</a>
-                        <form action="{{ url('dashboard/service/delete/'.$service->id) }}" method="POST" style="display: inline;">
+                        {{-- <a href="{{ url('dashboard/shelves/edit/'.$shelf->id) }}" class="btn btn-primary">Edit</a> --}}
+                        <form action="{{ url('dashboard/shelves/delete/'.$shelf->id) }}" method="POST" style="display: inline;">
                             @csrf
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
@@ -42,5 +42,5 @@
         </tbody>
     </table>
 
-    {{ $services->links() }}
+    {{ $shelves->links() }}
 @endsection
