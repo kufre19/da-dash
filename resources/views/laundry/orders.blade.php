@@ -30,6 +30,8 @@
                 <th>Payment Mode</th>
                 <th>Payment Status</th>
                 <th>Status</th>
+                <th>Located On Shelf</th>
+
                 <th>Action</th>
             </tr>
         </thead>
@@ -43,6 +45,8 @@
                     <td>{{$order->payment_mode}}</td>
                     <td>{{$order->payment_status}}</td>
                     <td>{{$order->status}}</td>
+                    <td>{{$order->shelf}}</td>
+
                     <td>
                         <a href="{{url('/dashboard/laundry/basket/preview').'/'.$order->order_number}}" class="btn btn-primary">Preview</a>
                         <a href="{{url('/dashboard/laundry/basket/gallery/view').'/'.$order->order_number}}" class="btn btn-primary">View Gallery</a>

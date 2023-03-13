@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\Customers;
 use App\Models\Laundry;
 use App\Models\LaundryImages;
+use App\Models\Shelf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -135,6 +136,8 @@ trait LaundryFunctions
         if ($id != "") {
 
             $laundry_model = new Laundry();
+            $shelf_model = new Shelf();
+            $shelves = $shelf_model->get();
             $laundry = $laundry_model->where("order_number", $id)->first();
 
             if (!$laundry) {
@@ -153,6 +156,8 @@ trait LaundryFunctions
             $image_uploaded = $laundry->image_uploaded;
             $payment_mode = $laundry->payment_mode;
             $payment_status = $laundry->payment_status;
+            $order_shelf = $laundry->shelf;
+
 
 
 
@@ -167,7 +172,9 @@ trait LaundryFunctions
                 "image_uploaded",
                 "order_status",
                 "payment_mode",
-                "payment_status"
+                "payment_status",
+                "shelves",
+                "order_shelf"
             ));
         } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
             $order_info = session()->get("laundry_order_info");
@@ -309,5 +316,19 @@ trait LaundryFunctions
 
         // dd("dashboard/laundry/basket/preview"."/".$order_number);
         return redirect()->to("dashboard/laundry/basket/preview"."/".$order_number);
+    }
+
+    public function update_order_shelf(Request $request)
+    {
+        $shelf = $request->input("shelf");
+        $order_number = $request->input("order_number");
+
+        $laundry_model = new Laundry();
+        $laundry_model->where("order_number", $order_number)
+            ->update([
+                "shelf" => $shelf
+            ]);
+
+        return redirect()->back();
     }
 }
