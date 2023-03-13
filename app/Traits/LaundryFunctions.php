@@ -35,6 +35,7 @@ trait LaundryFunctions
         $laundry_model->date = $order_info['laundry_date'];
         $laundry_model->total_cost = $total_cost;
         $laundry_model->payment_mode =$order_info['payment_mode'];
+        $laundry_model->payment_status =$order_info['payment_status'];
         $laundry_model->order_number = $this->generate_order_id();
 
 
@@ -63,9 +64,17 @@ trait LaundryFunctions
         $quantity = $request->input('quantity');
         $cost = $request->input('cost');
         $payment_mode = $request->input('payment_mode');
+        $payment_status = $request->input('payment_status');
 
 
-        $laundry_order_info = ['customer' => $customer, 'laundry_date' => $laundry_date,"payment_mode"=>$payment_mode];
+
+        $laundry_order_info = [
+        'customer' => $customer, 
+        'laundry_date' => $laundry_date,
+        "payment_mode"=>$payment_mode,
+        "payment_mode"=>$payment_status
+        ];
+        
         session()->put("laundry_order_info", $laundry_order_info);
 
         if ($laundry_type == "") {
@@ -143,6 +152,8 @@ trait LaundryFunctions
             $total_cost = $laundry->total_cost;
             $image_uploaded = $laundry->image_uploaded;
             $payment_mode = $laundry->payment_mode;
+            $payment_status = $laundry->payment_status;
+
 
 
 
@@ -155,7 +166,8 @@ trait LaundryFunctions
                 "item_count",
                 "image_uploaded",
                 "order_status",
-                "payment_mode"
+                "payment_mode",
+                "payment_status"
             ));
         } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
             $order_info = session()->get("laundry_order_info");

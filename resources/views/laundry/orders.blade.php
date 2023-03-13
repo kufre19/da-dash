@@ -28,6 +28,7 @@
                 <th>Customer phone</th>
                 <th>Order Date</th>
                 <th>Payment Mode</th>
+                <th>Payment Status</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -40,6 +41,7 @@
                     <td>{{$order->phone}}</td>
                     <td>{{$order->date}}</td>
                     <td>{{$order->payment_mode}}</td>
+                    <td>{{$order->payment_status}}</td>
                     <td>{{$order->status}}</td>
                     <td>
                         <a href="{{url('/dashboard/laundry/basket/preview').'/'.$order->order_number}}" class="btn btn-primary">Preview</a>

@@ -58,6 +58,36 @@
                         @endif
                     </div>
                 </div>
+
+                <div class="col-12">
+                    <div class="p-5">
+
+                        @if (isset($payment_status))
+                            <form action="{{ url('dashboard/laundry/orders/update/payment/status') }}" method="POST"
+                                class="users">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="status">Payment Status:</label>
+                                    <select class="form-control" id="status" name="payment_status">
+
+                                        <option value="processing" {{ $payment_status == 'Paid' ? 'selected' : '' }}>
+                                            Paid
+                                        </option>
+                                        <option value="completed" {{ $payment_status == 'Unpaid' ? 'selected' : '' }}>
+                                            Unpaid
+                                        </option>
+                                        {{-- <option value="cancelled" {{ $payment_status == 'cancelled' ? 'selected' : '' }}>
+                                            Cancelled
+                                        </option> --}}
+                                    </select>
+                                    <input type="hidden" name="order_number" value="{{ $order_number }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Payment Status</button>
+                            </form>
+                        @endif
+                    </div>
+                </div>
             </div>
 
 

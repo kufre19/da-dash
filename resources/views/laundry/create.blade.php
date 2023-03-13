@@ -107,7 +107,26 @@
 
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <select  name="payment_mode" class=" form-control " required>
+                                    <label for="payment_status">Select Payment Status</label>
+
+                                    <select  name="payment_status" class=" form-control " required>
+                                        @if (session()->has('laundry_order_info'))
+                                        @if (session()->get('laundry_order_info')['payment_status'] != '')
+                                        <option value="{{session()->get('laundry_order_info')['payment_status']}}" selected>Select Payment Status</option>
+                                        @endif
+                                        @endif
+                                        <option disabled>Select Payment Status</option>
+
+                                        <option value="Paid">Paid</option>
+                                        <option value="Unpaid">Unpaid</option>
+                                        {{-- <option value="ATM Card">Deposit Made</option> --}}
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="payment_mode">Select Payment Mode</label>
+                                    
+                                    <select  name="payment_mode" class=" form-control " id="payment_mode" required>
                                         @if (session()->has('laundry_order_info'))
                                         @if (session()->get('laundry_order_info')['payment_mode'] != '')
                                         <option value="{{session()->get('laundry_order_info')['payment_mode']}}" selected>Select Payment Mode</option>
