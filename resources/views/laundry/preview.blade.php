@@ -194,7 +194,7 @@
                                 @if (isset($order_number))
                                     <button class="btn btn-primary btn-block" id="print-receipt-btn"
                                         data-label-data="{{ $order_number }}"
-                                        onclick="printLabel({{ $order_number }})">Print Tags</button>
+                                        onclick="printLabel()">Print Tags</button>
 
                                     @if (isset($image_uploaded) && $image_uploaded == 1)
                                         <a href="{{ url('dashboard/laundry/basket/gallery/view' . '/' . $order_number) }}"
@@ -235,8 +235,9 @@
         }
 
 
-        function printLabel(labelData) {
+        function printLabel() {
             var originalContents = document.body.innerHTML;
+            var labelData ="<p>"+ {{$order_number}}+"<br>" +"{{$customer->name}}"+"<br>" +"{{$customer->phone}}" +"</p>"
             document.body.innerHTML = labelData;
 
             // Add print styles to the page
