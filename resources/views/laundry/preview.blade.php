@@ -92,27 +92,28 @@
                     <div class="col-12">
                         <div class="p-5">
 
-                           
-                                <form action="{{ url('dashboard/laundry/orders/update/shelf/') }}" method="POST"
-                                    class="users">
-                                    @csrf
 
-                                    <div class="form-group">
-                                        <label for="shelf">Update Order Shelf Location:</label>
-                                        <select class="form-control" id="shelf" name="shelf">
-                                            @foreach ($shelves as $shelf)
-                                                <option value="{{$shelf->name}}" {{ $shelf->name == $order_shelf ? 'selected' : '' }}>
-                                                    {{$shelf->name}}
-                                                </option>
-                                            @endforeach
+                            <form action="{{ url('dashboard/laundry/orders/update/shelf/') }}" method="POST"
+                                class="users">
+                                @csrf
 
-                                           
-                                        </select>
-                                        <input type="hidden" name="order_number" value="{{ $order_number }}">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Update Order Shelf</button>
-                                </form>
-                        
+                                <div class="form-group">
+                                    <label for="shelf">Update Order Shelf Location:</label>
+                                    <select class="form-control" id="shelf" name="shelf">
+                                        @foreach ($shelves as $shelf)
+                                            <option value="{{ $shelf->name }}"
+                                                {{ $shelf->name == $order_shelf ? 'selected' : '' }}>
+                                                {{ $shelf->name }}
+                                            </option>
+                                        @endforeach
+
+
+                                    </select>
+                                    <input type="hidden" name="order_number" value="{{ $order_number }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Order Shelf</button>
+                            </form>
+
                         </div>
                     </div>
                 @endif
@@ -265,8 +266,9 @@
 
         function printLabel() {
             var originalContents = document.body.innerHTML;
-            var labelData = "<p>" + {{ $order_number }} + "<br>" + "{{ $customer->name }}" + "<br>" +
-                "{{ $customer->phone }}" + "</p>"
+            var labelData = "<p>" + "{{ $order_number }}" + "<br>" + "{{ $customer->name }}" + "<br>" +
+                "{{ $customer->phone }}" + "<br>" +
+                "{{ $order_shelf }}" + "</p>"
             document.body.innerHTML = labelData;
 
             // Add print styles to the page
