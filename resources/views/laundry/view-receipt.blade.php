@@ -104,9 +104,14 @@
                                                 <strong>{{ $item_count ?? 'NA' }}</strong>
                                             </td>
                                         </tr>
-
-
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" style="position: relative; text-align: center;">
+                                              <svg id="barcode"></svg>
+                                            </td>
+                                          </tr>
+                                    </tfoot>
                                 </table>
 
                             </div>
@@ -151,8 +156,21 @@
 
 @section('extraJS')
     <!-- Load jQuery and Select2 JavaScript libraries from a CDN or include them in your project -->
+    <script src="{{ asset('js/custom/JsBarcode-master/dist/JsBarcode.all.min.js') }}"></script>
 
 
+
+
+    <script>
+        JsBarcode("#barcode", "{{ $order_number }}", {
+            format: "code39",
+            displayValue: false,
+            fontSize: 20,
+            margin: 10,
+            width: 2,
+            height: 100
+        });
+    </script>
 
     <script type="text/javascript">
         function printReceipt() {
