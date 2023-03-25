@@ -48,7 +48,7 @@
                     <td>{{$order->shelf}}</td>
 
                     <td>
-                        <a href="{{url('/dashboard/laundry/basket/preview').'/'.$order->order_number}}" class="btn btn-primary">Preview</a>
+                        <a href="{{url('/dashboard/laundry/basket/preview').'/'.$order->order_number}}" class="btn btn-primary">More</a>
                         <a href="{{url('/dashboard/laundry/basket/gallery/view').'/'.$order->order_number}}" class="btn btn-primary">View Gallery</a>
                     </td>
 

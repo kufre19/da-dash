@@ -30,6 +30,12 @@ trait LaundryFunctions
         $order_items = json_encode(session()->get("laundry_basket"));
         $total_cost = $this->basket_total_cost();
 
+        /* this here will prevent the system from breaking when session has been cleared but user somehow still gets to submit create button */
+        if($total_cost == false)
+        {
+            return redirect()->route("laundry.create");
+        }
+
         $laundry_model = new Laundry();
         $laundry_model->order_items = $order_items;
         $laundry_model->customer_id = $order_info['customer'];
@@ -43,7 +49,7 @@ trait LaundryFunctions
         $laundry_model->save();
         $this->laundry_basket_clear();
 
-        return redirect()->to("dashboard/laundry/basket/preview" . "/" . $laundry_model->order_number);
+        return redirect()->to("dashboard/laundry/basket/view/receipt" . "/" . $laundry_model->order_number);
     }
 
     public function laundry_basket_remove($id)
@@ -122,6 +128,10 @@ trait LaundryFunctions
     {
         $laundry_basket = session()->get("laundry_basket");
         $total = 0;
+        if($laundry_basket == null)
+        {
+            return false;
+        }
         foreach ($laundry_basket as $key => $value) {
             $cost = $value['quantity'] * $value['cost'];
             $total += $cost;
@@ -129,10 +139,8 @@ trait LaundryFunctions
         return $total;
     }
 
-
-    public function laundry_preview_page($id = "")
+    public function laundry_preview_page($id)
     {
-
         if ($id != "") {
 
             $laundry_model = new Laundry();
@@ -188,6 +196,70 @@ trait LaundryFunctions
 
 
             return view("laundry.preview", compact("customer", "order_date", "total_cost","item_count"));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+
+    public function laundry_view_receipt_page($id = "")
+    {
+
+        if ($id != "") {
+
+            $laundry_model = new Laundry();
+            $shelf_model = new Shelf();
+            $shelves = $shelf_model->get();
+            $laundry = $laundry_model->where("order_number", $id)->first();
+
+            if (!$laundry) {
+                return redirect()->to("dashboard/laundry/create/");
+            }
+
+            $customer_model = new Customers();
+            $customer = $customer_model->where("id", $laundry->customer_id)->first();
+
+            $order_date = $laundry->date;
+            $order_items = json_decode($laundry->order_items, true);
+            $item_count = count($order_items);
+            $order_number = $laundry->order_number;
+            $order_status = $laundry->status;
+            $total_cost = $laundry->total_cost;
+            $image_uploaded = $laundry->image_uploaded;
+            $payment_mode = $laundry->payment_mode;
+            $payment_status = $laundry->payment_status;
+            $order_shelf = $laundry->shelf;
+
+
+
+
+
+            return view("laundry.view-receipt", compact(
+                "customer",
+                "order_date",
+                "order_items",
+                "order_number",
+                "total_cost",
+                "item_count",
+                "image_uploaded",
+                "order_status",
+                "payment_mode",
+                "payment_status",
+                "shelves",
+                "order_shelf"
+            ));
+        } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
+            $order_info = session()->get("laundry_order_info");
+            $customer_id = $order_info['customer'];
+            $order_date = $order_info['laundry_date'];
+            $total_cost = number_format($this->basket_total_cost(), 2);
+            $item_count = count(session()->get("laundry_basket"));
+
+            $customer_model = new Customers();
+            $customer = $customer_model->where("id", $customer_id)->first();
+
+
+            return view("laundry.view-receipt", compact("customer", "order_date", "total_cost","item_count"));
         } else {
             return redirect()->back();
         }

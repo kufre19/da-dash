@@ -82,8 +82,9 @@ Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
 
 
     // laundry
-    Route::get("/laundry/create/", [AdminController::class, "laundry_create_page"]);
-    Route::get("/laundry/basket/preview/{id?}", [AdminController::class, "laundry_preview_page"]);
+    Route::get("/laundry/create/", [AdminController::class, "laundry_create_page"])->name("laundry.create");
+    Route::get("/laundry/basket/view/receipt/{id?}", [AdminController::class, "laundry_view_receipt_page"]);
+    Route::get("/laundry/basket/preview/{id}",[AdminController::class, "laundry_preview_page"]);
     Route::get("/laundry/basket/clear", [AdminController::class, "laundry_basket_clear"]);
     Route::post("/laundry/basket/add/", [AdminController::class, "laundry_basket_add"]);
     Route::post("/laundry/basket/remove/{id}", [AdminController::class, "laundry_basket_remove"]);

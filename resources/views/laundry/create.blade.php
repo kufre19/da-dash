@@ -444,7 +444,7 @@
                         </div>
 
                         <div class="container">
-                            <a href="{{url('dashboard/laundry/basket/preview')}}" class="btn btn-success btn-user btn-block">Preview Order</a>
+                            <a href="{{url('dashboard/laundry/basket/view/receipt')}}" class="btn btn-success btn-user btn-block">View Order Receipt</a>
                         </div>
 
                        

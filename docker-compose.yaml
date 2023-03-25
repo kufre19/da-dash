@@ -6,7 +6,7 @@ services:
     build: 
       context: .
       dockerfile: .
-    restart: always
+    restart: "no"
     ports:
       - 80:80
       - 8000:8000
@@ -23,7 +23,7 @@ services:
 
   db:
     image: mysql:latest
-    restart: always
+    restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: admin
     volumes:
@@ -35,7 +35,7 @@ services:
   
   phpmyadmin:
     image: phpmyadmin:5.2.0-apache
-    restart: always
+    restart: "no"
     ports:
       - 8080:80
     environment:
