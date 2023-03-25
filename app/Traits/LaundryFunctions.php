@@ -31,8 +31,7 @@ trait LaundryFunctions
         $total_cost = $this->basket_total_cost();
 
         /* this here will prevent the system from breaking when session has been cleared but user somehow still gets to submit create button */
-        if($total_cost == false)
-        {
+        if ($total_cost == false) {
             return redirect()->route("laundry.create");
         }
 
@@ -41,8 +40,8 @@ trait LaundryFunctions
         $laundry_model->customer_id = $order_info['customer'];
         $laundry_model->date = $order_info['laundry_date'];
         $laundry_model->total_cost = $total_cost;
-        $laundry_model->payment_mode =$order_info['payment_mode'];
-        $laundry_model->payment_status =$order_info['payment_status'];
+        // $laundry_model->payment_mode = $order_info['payment_mode'];
+        $laundry_model->payment_status = $order_info['payment_status'];
         $laundry_model->order_number = $this->generate_order_id();
 
 
@@ -67,21 +66,23 @@ trait LaundryFunctions
         $customer = $request->input('customer');
         $description = $request->input('description');
         $laundry_type = $request->input('laundry_type');
+        if ($laundry_type == "Others") {
+
+            $laundry_type = $request->input('laundry_type_other');
+        }
         $laundry_date = $request->input('laundry_date');
         $quantity = $request->input('quantity');
         $cost = $request->input('cost');
-        $payment_mode = $request->input('payment_mode');
         $payment_status = $request->input('payment_status');
 
 
 
         $laundry_order_info = [
-        'customer' => $customer, 
-        'laundry_date' => $laundry_date,
-        "payment_mode"=>$payment_mode,
-        "payment_status"=>$payment_status
+            'customer' => $customer,
+            'laundry_date' => $laundry_date,
+            "payment_status" => $payment_status
         ];
-        
+
         session()->put("laundry_order_info", $laundry_order_info);
 
         if ($laundry_type == "") {
@@ -128,8 +129,7 @@ trait LaundryFunctions
     {
         $laundry_basket = session()->get("laundry_basket");
         $total = 0;
-        if($laundry_basket == null)
-        {
+        if ($laundry_basket == null) {
             return false;
         }
         foreach ($laundry_basket as $key => $value) {
@@ -165,6 +165,7 @@ trait LaundryFunctions
             $payment_mode = $laundry->payment_mode;
             $payment_status = $laundry->payment_status;
             $order_shelf = $laundry->shelf;
+            
 
 
 
@@ -182,7 +183,8 @@ trait LaundryFunctions
                 "payment_mode",
                 "payment_status",
                 "shelves",
-                "order_shelf"
+                "order_shelf",
+               
             ));
         } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
             $order_info = session()->get("laundry_order_info");
@@ -195,7 +197,7 @@ trait LaundryFunctions
             $customer = $customer_model->where("id", $customer_id)->first();
 
 
-            return view("laundry.preview", compact("customer", "order_date", "total_cost","item_count"));
+            return view("laundry.preview", compact("customer", "order_date", "total_cost", "item_count"));
         } else {
             return redirect()->back();
         }
@@ -259,7 +261,7 @@ trait LaundryFunctions
             $customer = $customer_model->where("id", $customer_id)->first();
 
 
-            return view("laundry.view-receipt", compact("customer", "order_date", "total_cost","item_count"));
+            return view("laundry.view-receipt", compact("customer", "order_date", "total_cost", "item_count"));
         } else {
             return redirect()->back();
         }
@@ -301,9 +303,8 @@ trait LaundryFunctions
             return redirect()->back();
         } else {
             // Storage::disk('local')->delete($image->image_path);
-            $image = $image_model->where("id",$id)->delete();
+            $image = $image_model->where("id", $id)->delete();
             return redirect()->back();
-            
         }
     }
 
@@ -325,7 +326,7 @@ trait LaundryFunctions
                 $ext = $image->extension();
 
                 try {
-                    $new_name = $name."_".time() . "." . $ext;
+                    $new_name = $name . "_" . time() . "." . $ext;
                     $path = $image->storeAs('laundry_images', $new_name, 'public');
                     $laundryImage = new LaundryImages();
                     $laundryImage->name = $new_name;
@@ -382,12 +383,26 @@ trait LaundryFunctions
         return redirect()->back();
     }
 
+    public function update_order_payment_mode(Request $request)
+    {
+        $order_payment_status = $request->input("payment_mode");
+        $order_number = $request->input("order_number");
+
+        $laundry_model = new Laundry();
+        $laundry_model->where("order_number", $order_number)
+            ->update([
+                "payment_mode" => $order_payment_status
+            ]);
+
+        return redirect()->back();
+    }
+
     public function view_laundry_order(Request $request)
     {
         $order_number = $request->input("order_number");
 
         // dd("dashboard/laundry/basket/preview"."/".$order_number);
-        return redirect()->to("dashboard/laundry/basket/preview"."/".$order_number);
+        return redirect()->to("dashboard/laundry/basket/preview" . "/" . $order_number);
     }
 
     public function update_order_shelf(Request $request)

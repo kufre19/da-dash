@@ -61,6 +61,30 @@
 
                 <div class="col-12">
                     <div class="p-5">
+                        <form action="{{ url('dashboard/laundry/orders/update/payment/mode') }}" method="POST"
+                        class="users">
+                        @csrf
+                        <label for="payment_mode">Updae Payment Mode</label>
+
+                        <select name="payment_mode" class=" form-control " id="payment_mode" required>
+                            
+                            <option disabled>Select Payment Mode</option>
+
+                            <option value="Bank Transfer"{{$payment_mode == "Bank Transfer" ? 'selected':''}}>Bank Transfer</option>
+                            <option value="Cash"{{$payment_mode == "Cash" ? 'selected':''}}>Cash</option>
+                            <option value="ATM Card"{{$payment_mode == "ATM Card" ? 'selected':''}}>ATM Card</option>
+                        </select>
+                        <input type="hidden" name="order_number" value="{{ $order_number }}">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Update Payment Mode</button>
+
+                        </form>
+                       
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="p-5">
 
                         @if (isset($payment_status))
                             <form action="{{ url('dashboard/laundry/orders/update/payment/status') }}" method="POST"

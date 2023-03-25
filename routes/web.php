@@ -96,6 +96,7 @@ Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
     Route::get("/laundry/orders/", [AdminController::class, "laundry_orders_display_page"]);
     Route::post("/laundry/orders/update/status", [AdminController::class, "update_order_status"]);
     Route::post("/laundry/orders/update/payment/status", [AdminController::class, "update_order_payment_status"]);
+    Route::post("/laundry/orders/update/payment/mode", [AdminController::class, "update_order_payment_mode"]);
     Route::post("/laundry/orders/update/shelf", [AdminController::class, "update_order_shelf"]);
     Route::post("/laundry/orders/view/", [AdminController::class, "view_laundry_order"]);
 

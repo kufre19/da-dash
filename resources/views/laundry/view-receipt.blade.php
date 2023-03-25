@@ -25,7 +25,7 @@
     </div>
     <!-- /.container-fluid -->
 
-   
+
 
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -49,20 +49,17 @@
                         <div id="laundry_form" class="user">
                             <div class="receipt" id="receipt">
                                 <h2 class="text-center mb-4">{{ env('APP_NAME') }} Order Receipt</h2>
-                                <h5 class="text-center mb-4">{{env("COMPANY_ADDRESS")}}</h5>
+                                <h5 class="text-center mb-4">{{ env('COMPANY_ADDRESS') }}</h5>
 
                                 <div class="row mb-4">
                                     <div class="col-6">
                                         <p><strong>Customer Name:</strong> {{ $customer->name }}</p>
                                         <p><strong>Order Date:</strong> {{ $order_date }}</p>
-
-
-
                                     </div>
+
                                     <div class="col-6 text-right">
                                         <p><strong>Payment Mode:</strong> {{ $payment_mode ?? 'NA' }}</p>
                                         <p><strong>Order Number:</strong> {{ $order_number ?? 'NA' }}</p>
-                            
                                     </div>
                                 </div>
                                 <table class="table">
@@ -91,9 +88,7 @@
                                                 <tr>
                                                     <td>{{ $item['laundry_type'] }}</td>
                                                     <td>{{ $item['description'] }}</td>
-                                                    <div class="card-footer">
-
-                                                    </div>          <td>{{ $item['cost'] }}</td>
+                                                    <td>{{ $item['cost'] }}</td>
                                                     <td>{{ $item['quantity'] }}</td>
                                                     <td>{{ $item['quantity'] * $item['cost'] }}</td>
                                                 </tr>
@@ -171,9 +166,9 @@
 
         function printLabel() {
             var originalContents = document.body.innerHTML;
-            var labelData = "<p>" + "{{ $order_number ?? "" }}" + "<br>" + "{{ $customer->name }}" + "<br>" +
+            var labelData = "<p>" + "{{ $order_number ?? '' }}" + "<br>" + "{{ $customer->name }}" + "<br>" +
                 "{{ $customer->phone }}" + "<br>" +
-                "{{ $order_shelf ?? "" }}" + "</p>"
+                "{{ $order_shelf ?? '' }}" + "</p>"
             document.body.innerHTML = labelData;
 
             // Add print styles to the page

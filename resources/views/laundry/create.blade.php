@@ -1,7 +1,7 @@
 @extends('layouts.custom.app')
 
 @section('extraLinks')
-<meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <style>
         #SelExample {
@@ -109,11 +109,12 @@
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="payment_status">Select Payment Status</label>
 
-                                    <select  name="payment_status" class=" form-control " required>
+                                    <select name="payment_status" class=" form-control " required>
                                         @if (session()->has('laundry_order_info'))
-                                        @if (session()->get('laundry_order_info')['payment_status'] != '')
-                                        <option value="{{session()->get('laundry_order_info')['payment_status']}}" selected>Select Payment Status</option>
-                                        @endif
+                                            @if (session()->get('laundry_order_info')['payment_status'] != '')
+                                                <option value="{{ session()->get('laundry_order_info')['payment_status'] }}"
+                                                    selected>Select Payment Status</option>
+                                            @endif
                                         @endif
                                         <option disabled>Select Payment Status</option>
 
@@ -123,26 +124,12 @@
                                     </select>
                                 </div>
 
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <label for="payment_mode">Select Payment Mode</label>
-                                    
-                                    <select  name="payment_mode" class=" form-control " id="payment_mode" required>
-                                        @if (session()->has('laundry_order_info'))
-                                        @if (session()->get('laundry_order_info')['payment_mode'] != '')
-                                        <option value="{{session()->get('laundry_order_info')['payment_mode']}}" selected>Select Payment Mode</option>
-                                        @endif
-                                        @endif
-                                        <option disabled>Select Payment Mode</option>
-
-                                        <option value="Bank Transfer">Bank Transfer</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="ATM Card">ATM Card</option>
-                                    </select>
-                                </div>
+                                
                             </div>
 
                             <hr>
-                        <a href="{{url('dashboard/laundry/basket/clear')}}" class="btn btn-danger btn-user btn-block">Clear Basket</a>
+                            <a href="{{ url('dashboard/laundry/basket/clear') }}"
+                                class="btn btn-danger btn-user btn-block">Clear Basket</a>
 
                     </div>
                 </div>
@@ -332,11 +319,19 @@
                                             <div class="col-md-6">
                                                 <label>
                                                     <input type="radio" name="laundry_type" value="Others">
-                                                    
+
                                                     <span> Others</span>
                                                 </label>
                                             </div>
-                                           
+
+                                            <div class="col-md-6" style="display: none">
+                                                <label>
+                                                    <input type="text" class="form" name="laundry_type_other"
+                                                        placeholder="enter laundry type">
+
+                                                </label>
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -420,7 +415,7 @@
                                         @endphp
                                         @for ($i = 0; $i < $count_item; $i++)
                                             <tr>
-    
+
                                                 <td>{{ $item[$i]['laundry_type'] }}</td>
                                                 <td>{{ $item[$i]['description'] }}</td>
                                                 <td>{{ $item[$i]['cost'] }}</td>
@@ -436,18 +431,19 @@
                                     @else
                                         <p>No Item In Laundry Basket</p>
                                     @endif
-    
-    
-    
+
+
+
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="container">
-                            <a href="{{url('dashboard/laundry/basket/view/receipt')}}" class="btn btn-success btn-user btn-block">View Order Receipt</a>
+                            <a href="{{ url('dashboard/laundry/basket/view/receipt') }}"
+                                class="btn btn-success btn-user btn-block">View Order Receipt</a>
                         </div>
 
-                       
+
 
 
 
@@ -488,6 +484,24 @@
         });
     </script>
 
+    {{-- toogle the orther laundry type selection to feild --}}
+    <script>
+        function toggleLaundryType() {
+            var radio = document.querySelector('input[name="laundry_type"][value="Others"]');
+            var textField = document.querySelector('input[name="laundry_type_other"].form');
+
+            if (radio.checked) {
+                radio.closest('.col-md-6').style.display = 'none';
+                textField.closest('.col-md-6').style.display = 'block';
+            } else {
+                radio.closest('.col-md-6').style.display = 'block';
+                textField.closest('.col-md-6').style.display = 'none';
+            }
+        }
+
+        document.querySelector('input[name="laundry_type"][value="Others"]').addEventListener('change', toggleLaundryType);
+    </script>
+
 
 
     {{-- when form is submitted  --}}
@@ -509,10 +523,22 @@
                             "<td>" + response.cost + "</td>" +
                             "<td>" + response.quantity + "</td>" +
 
-                            "<td> <button type='button' class='btn delete-btn btn-danger btn-sm' data-id=' "+response.id +"'><i class='fa fa-trash'></i></button></td>" +
+                            "<td> <button type='button' class='btn delete-btn btn-danger btn-sm' data-id=' " +
+                            response.id + "'><i class='fa fa-trash'></i></button></td>" +
                             "</tr>";
                         $("#laundry-table tbody").append(tableRow);
                         $alert.addClass('alert-success');
+
+                        // show the other field bac
+                        var radio = document.querySelector(
+                            'input[name="laundry_type"][value="Others"]');
+                        var textField = document.querySelector(
+                            'input[name="laundry_type_other"].form');
+
+                        radio.closest('.col-md-6').style.display = 'block';
+                        textField.closest('.col-md-6').style.display = 'none';
+                        textField.val("");
+
                     },
                     error: function(xhr, textStatus, errorThrown) {
                         console.log("Error: " + errorThrown);
@@ -527,15 +553,15 @@
                     var itemId = $(this).data('id');
                     var token = $('meta[name="csrf-token"]').attr('content');
 
-                    var deleteUrl = "{{ url('dashboard/laundry/basket/remove') }}"+ "/" + itemId;
+                    var deleteUrl = "{{ url('dashboard/laundry/basket/remove') }}" + "/" + itemId;
 
                     // Make AJAX request to server to delete item
                     $.ajax({
                         url: deleteUrl,
                         method: 'POST',
                         headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         success: function(response) {
                             // If deletion is successful, remove corresponding row from table
                             $('tr[data-id="' + itemId + '"]').remove();
