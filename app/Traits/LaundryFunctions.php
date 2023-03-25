@@ -288,7 +288,7 @@ trait LaundryFunctions
         $images = $image_model->select("id", "image_path", "name")->where('order_number', $id)->get();
 
         if ($images->count() < 1) {
-            return redirect()->back();
+            return redirect()->back()->with("error","No images found in gallery for this order!");
         }
 
         return view("laundry.laundry_gallery", compact("images"));

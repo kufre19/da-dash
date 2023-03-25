@@ -33,7 +33,7 @@
                                 @csrf
 
                                 <div class="form-group">
-                                    <label for="status">Status:</label>
+                                    <label for="status">Select or Search Order:</label>
                                     <select id="mySelect" class="form-control" id="status" name="order_number">
                                         @foreach ($laundries as $laundry)
                                             <option value="{{ $laundry->order_number }}">{{ $laundry->order_number }}
