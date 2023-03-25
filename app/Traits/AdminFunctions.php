@@ -26,6 +26,8 @@ trait AdminFunctions
         return view("admin.dashboard",compact("sales_count","customer_count"));
     }
 
+  
+
     public function Admin_staff()
     {
         // $laundry_model = new Laundry();

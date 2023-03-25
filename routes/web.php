@@ -62,6 +62,9 @@ Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
           Route::get("/shelves/edit/{id}", [AdminController::class, "showShelvesEditPage"]);
           Route::post("/shelves/delete/{id}", [AdminController::class, "deleteShelves"]);
           Route::post("/shelves/edit/", [AdminController::class, "editShelves"]);
+
+        //   Sales
+        Route::get("sales/index",[AdminController::class, "show_sales_index_Page"]);
     });
 
     Route::get('/', [AdminController::class, "Admin_dashboard"])->name('dashboard');
