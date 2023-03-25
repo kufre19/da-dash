@@ -28,10 +28,10 @@ trait AdminFunctions
 
     public function Admin_staff()
     {
-        $laundry_model = new Laundry();
-        $laundries = $laundry_model->select("order_number")->get();
+        // $laundry_model = new Laundry();
+        // $laundries = $laundry_model->select("order_number")->get();
 
-        return view("admin.dashboard",compact("laundries"));
+        return view("admin.dashboard");
 
     }
 

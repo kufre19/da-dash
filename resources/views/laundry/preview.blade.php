@@ -20,7 +20,8 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Laundry Order Preview/Update <a href=""></a></h1>
+        <h1 class="h3 mb-4 text-gray-800">Laundry Order Preview/Update  <a href="{{ url('dashboard/laundry/basket/view/receipt' . '/' . $order_number) }}"
+            class="btn btn-primary">View Receipt</a></h1>
 
     </div>
     <!-- /.container-fluid -->

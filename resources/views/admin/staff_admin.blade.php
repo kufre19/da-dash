@@ -20,7 +20,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Welcome, {{Auth::user()->name}}! <a href=""></a></h1>
+        <h1 class="h3 mb-4 text-gray-800">Welcome, {{ Auth::user()->name }}! <a href=""></a></h1>
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
@@ -33,13 +33,15 @@
                                 @csrf
 
                                 <div class="form-group">
-                                    <label for="status">Select or Search Order:</label>
-                                    <select id="mySelect" class="form-control" id="status" name="order_number">
+                                    <label for="status"> Search Order:</label>
+                                    <input type="text" name="order_number" id="orderNumberInput" class="form-control">
+
+                                    {{-- <select id="mySelect" class="form-control" id="status" name="order_number">
                                         @foreach ($laundries as $laundry)
                                             <option value="{{ $laundry->order_number }}">{{ $laundry->order_number }}
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
 
                                 </div>
                                 <button type="submit" class="btn btn-primary">View Order</button>
@@ -70,6 +72,23 @@
         });
     </script>
 
+    <script>
+        let inputField = document.getElementById("orderNumberInput");
+
+        // Listen for input from the scanner
+        document.addEventListener('keydown', (event) => {
+            if (event.code.startsWith('Key')) {
+                // Build the input value as keys are pressed
+                inputField.value += event.key;
+            }
+        });
+
+        // Reset the input value on focus
+        inputField.addEventListener('focus', () => {
+            inputField.value = '';
+        });
+    </script>
+
 
 
 
@@ -83,9 +102,4 @@
             });
         });
     </script>
-
-
-
-   
-   
 @endsection
