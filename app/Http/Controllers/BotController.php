@@ -52,7 +52,7 @@ class BotController extends Controller
             $this->username =$request['entry'][0]['changes'][0]["value"]['contacts'][0]['profile']['name'] ?? "there";
             $this->userphone =$request['entry'][0]['changes'][0]["value"]['contacts'][0]['wa_id'];
 
-            info($request);
+            // info($request);
 
             if(isset($request['entry'][0]['changes'][0]["value"]['messages'][0]['text']))
             {
