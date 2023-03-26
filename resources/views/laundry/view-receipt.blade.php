@@ -162,7 +162,8 @@
 
 
     <script>
-        JsBarcode("#barcode", "{{ $order_number }}", {
+        var order_number = {{ $order_number ?? "empty" }} 
+        JsBarcode("#barcode", order_number, {
             format: "code39",
             displayValue: false,
             fontSize: 20,

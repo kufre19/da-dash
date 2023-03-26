@@ -16,6 +16,19 @@
 @endsection
 
 @section('page_content')
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+    @endif
+
     <!-- Begin Page Content -->
     <div class="container-fluid">
 
@@ -37,7 +50,10 @@
                                 <div class="form-group">
                                     <label for="from_date">From:</label>
                                     <div class="input-group date">
-                                        <input type="text" name="from_date" value="{{date('Y-m-d')}}" class="form-control" id="datepicker_from"
+                                        @php
+                                            $from_date = session()->get('session_filters')['from_date'] ?? date('2022-01-01',);
+                                        @endphp
+                                        <input type="text" name="from_date" value="{{$from_date}}" class="form-control" id="datepicker_from"
                                             autocomplete="off">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -47,7 +63,10 @@
                                 <div class="form-group">
                                     <label for="to_date">To:</label>
                                     <div class="input-group date">
-                                        <input type="text" name="to_date" value="{{date('Y-m-d')}}" class="form-control" id="datepicker_to"
+                                        @php
+                                        $to_date = session()->get('session_filters')['to_date'] ?? date('Y-m-d');
+                                    @endphp
+                                        <input type="text" name="to_date" value="{{$to_date}}" class="form-control" id="datepicker_to"
                                             autocomplete="off">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>

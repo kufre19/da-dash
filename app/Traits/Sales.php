@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 trait Sales
 {
@@ -35,6 +36,15 @@ trait Sales
         $orders = $orders_data['orders_paginate'];
         $orders_count = $orders_data['order_count'];
         $total_amount =  $orders_data['total_amount'];
-        return view("sales.index", compact("orders", "orders_count", "total_amount"));
+        $error_msg = $orders_data["error_msg"];
+        $errors = new MessageBag();
+        if(!empty($error_msg))
+        {
+            foreach ($error_msg as $key => $value) {
+                $errors->add($key, $value);
+            }
+        }
+        
+        return view("sales.index", compact("orders", "orders_count", "total_amount"))->with("errors",$errors);
     }
 }
