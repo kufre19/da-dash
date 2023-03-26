@@ -57,7 +57,9 @@ trait Analytics
     {
 
         $from_date = $request->input("from_date") ?? session()->get('session_filters')['from_date'] ?? "";
+        $from_date = date("Y-m-d",strtotime($from_date));
         $to_date = $request->input("to_date") ?? session()->get('session_filters')['to_date'] ?? "";
+        $to_date = date("Y-m-d",strtotime($to_date));
         $customer =  $request->input("customer") ?? session()->get('session_filters')['customer'] ?? "";
         $order_status = $request->input("order_status") ?? session()->get('session_filters')['order_status'] ?? "";
         $payment_status = $request->input("payment_status") ?? session()->get('session_filters')['payment_status'] ?? "";
@@ -81,8 +83,14 @@ trait Analytics
             } else {
                 $filer_Session['from_date'] = $from_date;
                 $filer_Session['to_date'] = $to_date;
-                $orders_query = $orders_query->whereBetween("laundries.created_at", [$from_date, $to_date]);
+            
+                if ($from_date == $to_date) {
+                    $orders_query = $orders_query->whereDate("laundries.created_at", $from_date);
+                } else {
+                    $orders_query = $orders_query->whereBetween("laundries.created_at", [$from_date, $to_date]);
+                }
             }
+            
             
 
         if ($customer != "") {

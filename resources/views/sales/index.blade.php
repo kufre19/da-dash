@@ -16,16 +16,16 @@
 @endsection
 
 @section('page_content')
-    @if($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <ul>
-                @foreach($errors->all() as $error)
+                @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-              </button>
+            </button>
         </div>
     @endif
 
@@ -42,7 +42,7 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <form action="{{ url('dashboard/sales/filter') }}" method="GET" class="users">
-                    
+
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="p-5">
@@ -51,10 +51,11 @@
                                     <label for="from_date">From:</label>
                                     <div class="input-group date">
                                         @php
-                                            $from_date = session()->get('session_filters')['from_date'] ?? date('2022-01-01',);
+                                            $from_date = session()->get('session_filters')['from_date'] ?? date('01/01/2022');
+                                            $from_date = date('m/d/Y', strtotime($from_date));
                                         @endphp
-                                        <input type="text" name="from_date" value="{{$from_date}}" class="form-control" id="datepicker_from"
-                                            autocomplete="off">
+                                        <input type="text" name="from_date" value="{{ $from_date }}"
+                                            class="form-control" id="datepicker_from" autocomplete="off">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -64,10 +65,11 @@
                                     <label for="to_date">To:</label>
                                     <div class="input-group date">
                                         @php
-                                        $to_date = session()->get('session_filters')['to_date'] ?? date('Y-m-d');
-                                    @endphp
-                                        <input type="text" name="to_date" value="{{$to_date}}" class="form-control" id="datepicker_to"
-                                            autocomplete="off">
+                                            $to_date = session()->get('session_filters')['to_date'] ?? date('m/d/Y');
+                                            $to_date = date('m/d/Y', strtotime($to_date));
+                                        @endphp
+                                        <input type="text" name="to_date" value="{{ $to_date }}"
+                                            class="form-control" id="datepicker" autocomplete="off">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                         </div>
@@ -80,18 +82,24 @@
 
                                 <div class="form-group">
                                     <label for="field1">Customer Number:</label>
-                                    <input type="text" name="customer" value="{{session()->get('session_filters')['customer'] ?? ""}}" class="form-control" id="field1">
+                                    <input type="text" name="customer"
+                                        value="{{ session()->get('session_filters')['customer'] ?? '' }}"
+                                        class="form-control" id="field1">
                                 </div>
                                 <div class="form-group">
                                     <label for="field2">Status:</label>
                                     <select name="order_status" class="form-control" id="field2">
                                         @php
-                                            $session_order_status = session()->get('session_filters')['order_status'] ?? "";
+                                            $session_order_status = session()->get('session_filters')['order_status'] ?? '';
                                         @endphp
                                         {{-- <option value="">Status</option> --}}
-                                        <option value="processing" {{$session_order_status == 'processing' ? 'selected' : ''}} >Processing</option>
-                                        <option value="completed" {{$session_order_status == 'completed' ? 'selected' : ''}}>Completed</option>
-                                        <option value="cancelled" {{$session_order_status == 'cancelled' ? 'selected' : ''}}>Cancelled</option>
+                                        <option value="processing"
+                                            {{ $session_order_status == 'processing' ? 'selected' : '' }}>Processing
+                                        </option>
+                                        <option value="completed"
+                                            {{ $session_order_status == 'completed' ? 'selected' : '' }}>Completed</option>
+                                        <option value="cancelled"
+                                            {{ $session_order_status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                     </select>
                                 </div>
                             </div>
@@ -102,23 +110,26 @@
                                     <label for="field2">Payment Mode:</label>
                                     <select name="payment_status" class="form-control" id="field2">
                                         @php
-                                            $session_payment_status = session()->get('session_filters')['payment_status'] ?? "";
+                                            $session_payment_status = session()->get('session_filters')['payment_status'] ?? '';
                                         @endphp
-                                        <option value="" >Select payment mode</option>
-                                        <option value="paid" {{$session_payment_status == 'paid' ? 'selected' : ''}}>Paid</option>
-                                        <option value="unpaid"  {{$session_payment_status == 'unpaid' ? 'selected' : ''}}>Unpaid</option>
+                                        <option value="">Select payment mode</option>
+                                        <option value="paid" {{ $session_payment_status == 'paid' ? 'selected' : '' }}>
+                                            Paid</option>
+                                        <option value="unpaid" {{ $session_payment_status == 'unpaid' ? 'selected' : '' }}>
+                                            Unpaid</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="card-footer">
                         <p>
                             <button type="submit" name="btn_filter" value="filter" class="btn btn-primary">Filter</button>
                         </p>
                         <p>
-                            <button type="submit" name="btn_filter" value="clear" class="btn btn-danger">Clear Filter</button>
+                            <button type="submit" name="btn_filter" value="clear" class="btn btn-danger">Clear
+                                Filter</button>
                         </p>
                     </div>
                 </form>
@@ -130,8 +141,8 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Results</h5>
                 <div>
-                    <span class="mr-3">Total Items: {{$orders_count}}</span>
-                    <span>Total Amount: {{env("CURRENCY_SYMBOL")}}{{$total_amount}}</span>
+                    <span class="mr-3">Total Items: {{ $orders_count }}</span>
+                    <span>Total Amount: {{ env('CURRENCY_SYMBOL') }}{{ $total_amount }}</span>
                 </div>
             </div>
 
@@ -168,8 +179,8 @@
                                             <td>{{ $order->name }}</td>
                                             <td>{{ $order->phone }}</td>
                                             <td>{{ $order->date }}</td>
-                                            <td>{{ number_format($order->total_cost,2) }}</td>
-                                           
+                                            <td>{{ number_format($order->total_cost, 2) }}</td>
+
 
                                             <td>
                                                 <a href="{{ url('/dashboard/laundry/basket/preview') . '/' . $order->order_number }}"
@@ -217,6 +228,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
     <script>
+        $(function() {
+            $('#datepicker_from').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+
         $(function() {
             $('#datepicker').datepicker({
                 autoclose: true,
