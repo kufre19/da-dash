@@ -17,11 +17,12 @@ trait SendMessage
     {
 
         $text = <<<MSG
-        Welcome to Ask HSE Chatbot. Please send your Email & ID for verification.
+        Hello {{$this->username}}, I'm the Customer Support Bot for {{env('APP_NAME')}}.
+        
+        Please select an Item from our menu.
         MSG;
-        $this->makeUserLogin();
         $this->send_post_curl($this->make_text_message($text));
-        $this->continue_session_step();
+        die;
     }
 
 
