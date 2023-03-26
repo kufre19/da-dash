@@ -37,7 +37,7 @@ trait SendMessage
         if ($to == "") {
             $to = $this->userphone;
         }
-        $this->send_post_curl($this->make_text_message($to, $text));
+        $this->send_post_curl($this->make_text_message($text,$to));
         return response("", 200);
     }
 
