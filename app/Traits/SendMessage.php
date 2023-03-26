@@ -15,9 +15,9 @@ trait SendMessage
 
     public function send_greetings_message()
     {
-
+        $company_name = env('APP_NAME');
         $text = <<<MSG
-        Hello {{$this->username}}, I'm the Customer Support Bot for {{env('APP_NAME')}}.
+        Hello $this->username, I'm the Customer Support Bot for $company_name.
         
         Please select an Item from our menu.
         MSG;
