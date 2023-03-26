@@ -138,12 +138,14 @@ class BotController extends Controller
 
     public function test(Request $request)
     {
+        $this->send_text_message($this->user_message_original);
         if(isset($request['hub_verify_token']))
         {
             return $this->verify_bot($request);
         }
 
         $this->send_text_message($this->user_message_original);
+        die;
         
     }
 
