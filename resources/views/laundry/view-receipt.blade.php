@@ -179,51 +179,17 @@
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
 
-            // Set the page size for Xprinter M813
-            var setPageSize = function() {
-                var pageWidth = 576; // Width of the page in dots (1mm = 8 dots for M813)
-                var pageHeight = document.body.clientHeight; // Height of the page in dots
+            // Set the page width to 80mm
+            var style = document.createElement('style');
+            style.innerHTML = '@media print { @page { size: 80mm; } }';
+            document.head.appendChild(style);
 
-                // Set the page size using ESC/POS commands
-                var setPageSizeCommand = new Uint8Array([
-                    27, 87, // Set print area width command
-                    pageWidth >> 8, pageWidth & 0xff,
-                    27, 74, 0, // Set print area height command (set to 0 for automatic height)
-                    27, 50 // Set line spacing to default
-                ]);
+            window.print();
 
-                var printAreaHeightCommand = new Uint8Array([
-                    27, 74, // Get print area height command
-                    255, 255 // Placeholder values for the response (max height)
-                ]);
-
-                var data = new Uint8Array(setPageSizeCommand.length + printAreaHeightCommand.length);
-                data.set(setPageSizeCommand);
-                data.set(printAreaHeightCommand, setPageSizeCommand.length);
-
-                // Send the commands to the printer
-                var printData = new Uint8Array(printContents.length + data.length);
-                printData.set(data);
-                printData.set(printContents, data.length);
-                var blob = new Blob([printData], {
-                    type: 'application/octet-stream'
-                });
-                var url = URL.createObjectURL(blob);
-                var iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = url;
-                document.body.appendChild(iframe);
-
-                // Cleanup
-                setTimeout(function() {
-                    document.body.removeChild(iframe);
-                    URL.revokeObjectURL(url);
-                    document.body.innerHTML = originalContents;
-                }, 1000);
-            };
-
-            setPageSize();
+            // Restore original contents
+            document.body.innerHTML = originalContents;
         }
+
 
 
 
