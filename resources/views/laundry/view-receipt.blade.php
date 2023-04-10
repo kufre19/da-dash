@@ -108,9 +108,9 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="5" style="position: relative; text-align: center;">
-                                              <svg id="barcode"></svg>
+                                                <svg id="barcode"></svg>
                                             </td>
-                                          </tr>
+                                        </tr>
                                     </tfoot>
                                 </table>
 
@@ -162,7 +162,7 @@
 
 
     <script>
-        var order_number = {{ $order_number ?? "empty" }} 
+        var order_number = {{ $order_number ?? 'empty' }}
         JsBarcode("#barcode", order_number, {
             format: "code39",
             displayValue: false,
@@ -178,9 +178,23 @@
             var printContents = document.getElementById("receipt").innerHTML;
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
+
+            // Set the page size to 80mm
+            var setPageSize = function() {
+                var pageWidth = 80; // Width of the page in millimeters
+                var pageHeight = pageWidth * 1.414; // Height of the page in millimeters (assuming A4 aspect ratio)
+
+                // Set the page size using CSS media queries
+                var style = document.createElement('style');
+                style.innerHTML = '@media print { @page { size: ' + pageWidth + 'mm ' + pageHeight + 'mm; } }';
+                document.head.appendChild(style);
+            }
+            setPageSize();
+
             window.print();
             document.body.innerHTML = originalContents;
         }
+
 
 
         function printLabel() {
