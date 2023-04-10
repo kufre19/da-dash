@@ -179,11 +179,6 @@
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
 
-            // Set the page width to 80mm
-            var style = document.createElement('style');
-            style.innerHTML = '@media print { @page { size: 80mm; } }';
-            document.head.appendChild(style);
-
             window.print();
 
             // Restore original contents
