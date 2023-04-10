@@ -180,14 +180,14 @@
             document.body.innerHTML = printContents;
 
             // Set the page width to 80mm and calculate the height
-            var pageWidth = 80; // Width of the page in millimeters
-            var receiptHeight = document.getElementById("receipt").offsetHeight;
-            var pageHeight = receiptHeight / 10 *
+            var pageWidth = 3000; // Width of the page in millimeters
+            // var receiptHeight = document.getElementById("receipt").offsetHeight;
+            // var pageHeight = receiptHeight / 10 *
             11; // Height of the page in millimeters (assuming 1mm = 10px and adding 10% for padding)
 
             // Set the page size using CSS media queries
             var style = document.createElement('style');
-            style.innerHTML = '@media print { @page { size: ' + pageWidth + 'mm ' + pageHeight + 'mm; } }';
+            style.innerHTML = '@media print { @page { size: ' + pageWidth + 'mm ' +  + 'auto; } }';
             document.head.appendChild(style);
 
             // Print the page
