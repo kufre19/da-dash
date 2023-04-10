@@ -179,16 +179,22 @@
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
 
-            // Add CSS to avoid page break inside certain elements
-            var style = document.createElement('style');
-            style.innerHTML = '@media print { * { page-break-inside: avoid; } }';
-            document.head.appendChild(style);
+            // Set the page size to 30% wider than 80mm
+            function setPageSize() {
+                var pageWidth = 104; // Width of the page in millimeters, increased by 30%
+                var pageHeight = pageWidth * 1.414; // Height of the page in millimeters (assuming A4 aspect ratio)
+
+                // Set the page size using CSS media queries
+                var style = document.createElement('style');
+                style.innerHTML = '@media print { @page { size: ' + pageWidth + 'mm ' + pageHeight + 'mm; } }';
+                document.head.appendChild(style);
+            }
+            setPageSize();
 
             window.print();
-
-            // Restore original contents
             document.body.innerHTML = originalContents;
         }
+
 
 
 
