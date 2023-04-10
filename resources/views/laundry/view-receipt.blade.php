@@ -179,21 +179,19 @@
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
 
-            // Set the page width to 80mm and calculate the height
-            var pageWidth = 3000; // Width of the page in millimeters
-            // var receiptHeight = document.getElementById("receipt").offsetHeight;
-            // var pageHeight = receiptHeight / 10 *
-            11; // Height of the page in millimeters (assuming 1mm = 10px and adding 10% for padding)
+            // Set the page size to 71.97mm x (content height + 10mm)
+            var contentHeight = document.getElementById("receipt").offsetHeight;
+            var pageHeight = contentHeight + 10; // Add 10mm for margins
+            var pageSizeCSS = "@media print { @page { size: 71.97mm " + pageHeight + "mm; margin: 5mm; } }";
+            var pageSizeStyle = document.createElement('style');
+            pageSizeStyle.type = 'text/css';
+            pageSizeStyle.appendChild(document.createTextNode(pageSizeCSS));
+            document.head.appendChild(pageSizeStyle);
 
-            // Set the page size using CSS media queries
-            var style = document.createElement('style');
-            style.innerHTML = '@media print { @page { size: ' + pageWidth + 'mm ' +  + 'auto; } }';
-            document.head.appendChild(style);
-
-            // Print the page
             window.print();
             document.body.innerHTML = originalContents;
         }
+
 
 
 
