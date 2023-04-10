@@ -179,14 +179,19 @@
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
 
-            // Add CSS to avoid page break inside certain elements
+            // Set the page width to 80mm and calculate the height
+            var pageWidth = 80; // Width of the page in millimeters
+            var receiptHeight = document.getElementById("receipt").offsetHeight;
+            var pageHeight = receiptHeight / 10 *
+            11; // Height of the page in millimeters (assuming 1mm = 10px and adding 10% for padding)
+
+            // Set the page size using CSS media queries
             var style = document.createElement('style');
-            style.innerHTML = '@media print { * { page-break-inside: avoid; } }';
+            style.innerHTML = '@media print { @page { size: ' + pageWidth + 'mm ' + pageHeight + 'mm; } }';
             document.head.appendChild(style);
 
+            // Print the page
             window.print();
-
-            // Restore original contents
             document.body.innerHTML = originalContents;
         }
 
