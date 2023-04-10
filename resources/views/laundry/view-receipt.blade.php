@@ -179,11 +179,17 @@
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
 
+            // Add CSS to avoid page break inside certain elements
+            var style = document.createElement('style');
+            style.innerHTML = '@media print { * { page-break-inside: avoid; } }';
+            document.head.appendChild(style);
+
             window.print();
 
             // Restore original contents
             document.body.innerHTML = originalContents;
         }
+
 
 
 
