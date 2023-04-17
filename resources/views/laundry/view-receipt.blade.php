@@ -203,7 +203,7 @@
         function printLabel() {
             var originalContents = document.body.innerHTML;
             var labelData =
-                '<div style="font-weight: bold; font-size: 24px; text-align: center; border: 2px solid black;">' +
+                '<div style="font-weight: bold; font-size: 24px; text-align: left; border: 2px solid black;">' +
                 '<p>' + '{{ $order_number ?? '' }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
                 '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}' + '</p>' + '</div>';
             document.body.innerHTML = labelData;
