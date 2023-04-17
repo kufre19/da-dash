@@ -202,14 +202,13 @@
 
         function printLabel() {
             var originalContents = document.body.innerHTML;
-            var labelData =
-                '<div style="font-weight: bold; font-size: 24px; text-align: center; border: 2px solid black; padding: 10px">' +
+            var labelData = '<div style="font-weight: bold; font-size: 24px; text-align: center;">' +
                 '<p>' + '{{ $order_number ?? '' }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
                 '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}' + '</p>' + '</div>';
             document.body.innerHTML = labelData;
 
             // Add print styles to the page
-            var printCSS = '@media print { @page { size: 4in 6in; margin: 0; } body { margin: 0; } }';
+            var printCSS = '@media print { body { margin: 0; } p { margin: 0; } }';
             var printStyle = document.createElement('style');
             printStyle.type = 'text/css';
             printStyle.appendChild(document.createTextNode(printCSS));
