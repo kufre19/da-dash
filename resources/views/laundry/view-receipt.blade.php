@@ -201,21 +201,22 @@
 
 
         function printLabel() {
-            var originalContents = document.body.innerHTML;
-            var labelData = '<div style="font-weight: bold; font-size: 24px; text-align: center;">' +
-                '<p>' + '{{ $order_number ?? '' }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
-                '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}' + '</p>' + '</div>';
-            document.body.innerHTML = labelData;
+  var originalContents = document.body.innerHTML;
+  var labelData = '<div style="font-weight: bold; font-size: 1.5em; text-align: center;">' +
+                  '<p>' + '{{ $order_number ?? "" }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
+                  '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? "" }}' + '</p>' + '</div>';
+  document.body.innerHTML = labelData;
 
-            // Add print styles to the page
-            var printCSS = '@media print { body { margin: 0; } p { margin: 0; } }';
-            var printStyle = document.createElement('style');
-            printStyle.type = 'text/css';
-            printStyle.appendChild(document.createTextNode(printCSS));
-            document.head.appendChild(printStyle);
+  // Add print styles to the page
+  var printCSS = '@media print { body { margin: 0; } p { margin: 0; font-size: 24px; } }';
+  var printStyle = document.createElement('style');
+  printStyle.type = 'text/css';
+  printStyle.appendChild(document.createTextNode(printCSS));
+  document.head.appendChild(printStyle);
 
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
+  window.print();
+  document.body.innerHTML = originalContents;
+}
+
     </script>
 @endsection
