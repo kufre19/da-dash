@@ -183,7 +183,7 @@
             printWindow.document.write('<html><head><title>Receipt</title>');
             printWindow.document.write(
                 '<style>@page {size: 72mm 210mm;margin: 0;} body {font-size: 10px; font-weight: bold; line-height: 1.4; text-rendering: optimizeLegibility;}</style>'
-                );
+            );
             printWindow.document.write('</head><body>');
             printWindow.document.write(printContents);
             printWindow.document.write('</body></html>');
@@ -202,13 +202,14 @@
 
         function printLabel() {
             var originalContents = document.body.innerHTML;
-            var labelData = "<p>" + "{{ $order_number ?? '' }}" + "<br>" + "{{ $customer->name }}" + "<br>" +
-                "{{ $customer->phone }}" + "<br>" +
-                "{{ $order_shelf ?? '' }}" + "</p>"
+            var labelData =
+                '<div style="font-weight: bold; font-size: 24px; text-align: center; border: 2px solid black; padding: 10px">' +
+                '<p>' + '{{ $order_number ?? '' }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
+                '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}' + '</p>' + '</div>';
             document.body.innerHTML = labelData;
 
             // Add print styles to the page
-            var printCSS = '@media print { @page { size: 4in 6in; } }';
+            var printCSS = '@media print { @page { size: 4in 6in; margin: 0; } body { margin: 0; } }';
             var printStyle = document.createElement('style');
             printStyle.type = 'text/css';
             printStyle.appendChild(document.createTextNode(printCSS));
