@@ -35,6 +35,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post("laundry/orders/offline-upload/", [AdminController::class, "upload_from_offline"]);
+
 
 Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
 

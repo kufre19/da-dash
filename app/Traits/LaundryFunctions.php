@@ -418,4 +418,9 @@ trait LaundryFunctions
 
         return redirect()->back();
     }
+
+    public function upload_from_offline(Request $request)
+    {
+
+    }
 }
