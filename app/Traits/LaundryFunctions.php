@@ -422,5 +422,25 @@ trait LaundryFunctions
     public function upload_from_offline(Request $request)
     {
 
+      
+
+        /* this here will prevent the system from breaking when session has been cleared but user somehow still gets to submit create button */
+        
+
+        $laundry_model = new Laundry();
+        $laundry_model->order_items =  $request['order_items'] ;
+        $laundry_model->customer_id = $request['customer'];
+        $laundry_model->date = $request['laundry_date'];
+        $laundry_model->total_cost = $request['total_cost'];
+        // $laundry_model->payment_mode = $order_info['payment_mode'];
+        $laundry_model->payment_status = $request['payment_status'];
+        $laundry_model->order_number =  $request['order_number'];
+
+
+        $laundry_model->save();
+        $this->laundry_basket_clear();
+
+        return response("ok",200);
+
     }
 }
