@@ -426,10 +426,22 @@ trait LaundryFunctions
 
         /* this here will prevent the system from breaking when session has been cleared but user somehow still gets to submit create button */
         
+        $customer_model = new Customers();
+        $customer = $customer_model->where("phone",$request['customer_phone'])->first();
+
+        if(!$customer)
+        {
+           
+            $customer_model->name = $request['customer_name'];
+            $customer_model->phone = $request['customer_phone'];
+            $customer = $customer_model->save();
+           
+        }
+
 
         $laundry_model = new Laundry();
         $laundry_model->order_items =  $request['order_items'] ;
-        $laundry_model->customer_id = $request['customer'];
+        $laundry_model->customer_id = $customer->id;
         $laundry_model->date = $request['laundry_date'];
         $laundry_model->total_cost = $request['total_cost'];
         // $laundry_model->payment_mode = $order_info['payment_mode'];
