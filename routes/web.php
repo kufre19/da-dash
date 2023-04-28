@@ -36,7 +36,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post("laundry/orders/offline-upload/", [API::class, "upload_from_offline"]);
+Route::any("laundry/orders/offline-upload/", [API::class, "upload_from_offline"]);
 
 
 Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
