@@ -21,6 +21,7 @@ class API extends Controller
 
         $customer = $customer_model->where("phone",$request['customer_phone'])->first();
         
+        dd("here", $request);
         
         if($laundry){
             return response("saved alrady",200);
