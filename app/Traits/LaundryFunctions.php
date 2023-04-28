@@ -393,7 +393,7 @@ trait LaundryFunctions
             ->update([
                 "payment_mode" => $order_payment_status
             ]);
-
+            $this->laundry_basket_clear();
         return redirect()->back();
     }
 
