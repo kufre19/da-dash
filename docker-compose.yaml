@@ -8,7 +8,6 @@ services:
       dockerfile: .
     restart: "no"
     ports:
-      - 80:80
       - 8000:8000
     volumes:
       - ./:/var/www/html
@@ -23,6 +22,7 @@ services:
 
   db:
     image: mysql:latest
+    container_name: mysql_db_dadash
     restart: "no"
     environment:
       MYSQL_ROOT_PASSWORD: admin

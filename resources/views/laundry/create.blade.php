@@ -124,6 +124,29 @@
                                     </select>
                                 </div>
 
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <label for="pickup_date">Select Pick Up Date</label>
+
+                                    <div class="input-group date">
+                                        @if (session()->has('laundry_order_info'))
+                                            @if (session()->get('laundry_order_info')['pick_up_date'] != '')
+                                                <input type="text" name="pick_up_date" class="form-control"
+                                                    value="{{ session()->get('laundry_order_info')['pick_up_date'] }}"
+                                                    id="pickup_date" autocomplete="off">
+                                            @else
+                                                <input type="text" name="pick_up_date" class="form-control"
+                                                    id="pickup_date" autocomplete="off">
+                                            @endif
+                                        @else
+                                            <input type="text" name="pick_up_date" class="form-control" id="pickup_date">
+                                        @endif
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
                                 
                             </div>
 
@@ -478,6 +501,17 @@
     <script>
         $(function() {
             $('#datepicker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+            $('#pickup_date').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+
+        $(function() {
+            $('#pickup_date').datepicker({
                 autoclose: true,
                 todayHighlight: true
             });

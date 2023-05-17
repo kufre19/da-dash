@@ -1,4 +1,4 @@
-POST http://0.0.0.0:8000/laundry/orders/offline-upload/
+POST https://da-dash.com/laundry/orders/offline-upload/
 Content-Type: application/json
 
 {

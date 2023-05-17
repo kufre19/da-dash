@@ -39,6 +39,7 @@ trait LaundryFunctions
         $laundry_model->order_items = $order_items;
         $laundry_model->customer_id = $order_info['customer'];
         $laundry_model->date = $order_info['laundry_date'];
+        $laundry_model->pickup_date = $order_info['pick_up_date'];
         $laundry_model->total_cost = $total_cost;
         // $laundry_model->payment_mode = $order_info['payment_mode'];
         $laundry_model->payment_status = $order_info['payment_status'];
@@ -74,12 +75,14 @@ trait LaundryFunctions
         $quantity = $request->input('quantity');
         $cost = $request->input('cost');
         $payment_status = $request->input('payment_status');
+        $pick_up_date = $request->input('pick_up_date');
 
 
 
         $laundry_order_info = [
             'customer' => $customer,
             'laundry_date' => $laundry_date,
+            'pick_up_date'=>$pick_up_date,
             "payment_status" => $payment_status
         ];
 
@@ -165,6 +168,8 @@ trait LaundryFunctions
             $payment_mode = $laundry->payment_mode;
             $payment_status = $laundry->payment_status;
             $order_shelf = $laundry->shelf;
+            $pick_up_date = $laundry->pickup_date;
+
             
 
 
@@ -184,12 +189,14 @@ trait LaundryFunctions
                 "payment_status",
                 "shelves",
                 "order_shelf",
+                "pick_up_date",
                
             ));
         } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
             $order_info = session()->get("laundry_order_info");
             $customer_id = $order_info['customer'];
             $order_date = $order_info['laundry_date'];
+            $pick_up_date = $order_info['pick_up_date'];
             $total_cost = number_format($this->basket_total_cost(), 2);
             $item_count = count(session()->get("laundry_basket"));
 
@@ -197,7 +204,7 @@ trait LaundryFunctions
             $customer = $customer_model->where("id", $customer_id)->first();
 
 
-            return view("laundry.preview", compact("customer", "order_date", "total_cost", "item_count"));
+            return view("laundry.preview", compact("customer", "order_date", "total_cost", "item_count","pick_up_date"));
         } else {
             return redirect()->back();
         }
@@ -231,6 +238,8 @@ trait LaundryFunctions
             $payment_mode = $laundry->payment_mode;
             $payment_status = $laundry->payment_status;
             $order_shelf = $laundry->shelf;
+            $pick_up_date = $laundry->pickup_date;
+
 
 
 
@@ -248,12 +257,14 @@ trait LaundryFunctions
                 "payment_mode",
                 "payment_status",
                 "shelves",
-                "order_shelf"
+                "order_shelf",
+                "pick_up_date",
             ));
         } elseif (session()->has("laundry_order_info") && session()->has("laundry_basket")) {
             $order_info = session()->get("laundry_order_info");
             $customer_id = $order_info['customer'];
             $order_date = $order_info['laundry_date'];
+            $pick_up_date = $order_info['pick_up_date'];
             $total_cost = number_format($this->basket_total_cost(), 2);
             $item_count = count(session()->get("laundry_basket"));
 
@@ -261,7 +272,7 @@ trait LaundryFunctions
             $customer = $customer_model->where("id", $customer_id)->first();
 
 
-            return view("laundry.view-receipt", compact("customer", "order_date", "total_cost", "item_count"));
+            return view("laundry.view-receipt", compact("customer", "order_date", "total_cost", "item_count","pick_up_date"));
         } else {
             return redirect()->back();
         }
