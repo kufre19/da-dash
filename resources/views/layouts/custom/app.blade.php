@@ -32,10 +32,15 @@
 
 
 
+       
 
+        
 
         @if (Auth::user()->role == 'Admin')
             @include('layouts.custom.sidebar')
+
+        @elseif(Auth::user()->role == 'Factory')
+            @include('layouts.custom.sidebar_factory')
         @else
             @include('layouts.custom.sidebar_staff')
         @endif

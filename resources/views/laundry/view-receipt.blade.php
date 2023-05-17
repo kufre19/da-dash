@@ -55,7 +55,7 @@
                                     <div class="col-6">
                                         <p><strong>Customer Name:</strong> {{ $customer->name }}</p>
                                         <p><strong>Order Date:</strong> {{ $order_date }}</p>
-                                        <p><strong>Order Date:</strong> {{ $pick_up_date }}</p>
+                                        <p><strong>Pick Up Date:</strong> {{ $pick_up_date ?? "NA" }}</p>
 
                                     </div>
 

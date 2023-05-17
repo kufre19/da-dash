@@ -3,5 +3,6 @@
 return [
    
     "Admin",
-    "Staff"
+    "Staff",
+    "Factory"
 ];
