@@ -68,10 +68,10 @@
                                     <thead>
                                         <tr>
                                             <th>Laundry Type</th>
-                                            <th>Description</th>
+                                            <th>Desc</th>
+                                            <th>Price</th>
+                                            <th>Qty</th>
                                             <th>Cost</th>
-                                            <th>Quantity</th>
-                                            <th>Total Cost</th>
                                         </tr>
                                     </thead>
                                     <tbody>
