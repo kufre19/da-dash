@@ -198,6 +198,26 @@
                                                 </label>
                                             </div>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>
+                                                    <input type="radio" name="laundry_type" value="shoes">
+                                                    <img src="https://static.thenounproject.com/attribution/2940337-600.png"
+                                                        alt="Shoes icon" style="width: 32px; height: 32px;">
+                                                    <span>Shoes</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>
+                                                    <input type="radio" name="laundry_type" value="native">
+                                                    <img src="https://static.thenounproject.com/attribution/1066309-600.png"
+                                                        alt="Native icon" style="width: 32px; height: 32px;">
+                                                    <span>Native</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>

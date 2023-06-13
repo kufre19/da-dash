@@ -207,7 +207,7 @@
             var labelData =
                 '<div style="font-weight: bold; font-size: 24px; text-align: left; border: 2px solid black; padding-top: 0; margin-top: 0;">' +
                 '<p>' + '{{ $order_number ?? '' }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
-                '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}' + '</p>' + '</div>';
+                '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}'+ '<br>' + 'Laundry:{{ $item_count ?? '' }}' + '</p>' + '</div>';
             document.body.innerHTML = labelData;
 
             // Add print styles to the page

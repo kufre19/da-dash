@@ -2,12 +2,16 @@
 
 namespace App\Traits;
 
+use App\Http\Controllers\BotAbilities\Main;
 use App\Models\User;
+use App\Models\WaUser;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 trait HandleText
 {
-    use HandleButton, SendMessage,CreateActionsSession;
+    use HandleButton, SendMessage;
 
     public $text_intent;
 
@@ -16,6 +20,9 @@ trait HandleText
         $this->find_text_intent();
         if ($this->text_intent == "greetings") {
             $this->send_greetings_message($this->userphone);
+            $main_ability = new Main();
+            $main_ability->begin_func();
+            $this->run_action_session();
         }
         if ($this->text_intent == "run_action_steps") {
             $this->continue_session_step();
@@ -60,7 +67,7 @@ trait HandleText
     }
 
 
-
+   
 
     public function  runtest(array $data)
     {

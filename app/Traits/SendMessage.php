@@ -5,7 +5,7 @@ namespace App\Traits;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-
+use function PHPSTORM_META\exitPoint;
 
 trait SendMessage
 {
@@ -15,14 +15,13 @@ trait SendMessage
 
     public function send_greetings_message()
     {
-        $company_name = env('APP_NAME');
+        $company_name = env('BOT_NAME');
         $text = <<<MSG
-        Hello $this->username, I'm the Customer Support Bot for $company_name.
-        
+        Hello $this->username, I'm the Customer Support Bot for $company_name.        
         Please select an Item from our menu.
         MSG;
         $this->send_post_curl($this->make_text_message($text));
-        die;
+        
     }
 
 
@@ -88,10 +87,17 @@ trait SendMessage
         ));
 
         $response = curl_exec($curl);
-        echo $response;
+        info($response);
+        return $response;
 
         // curl_close($curl);
 
+    }
+
+    public function ResponsedWith200()
+    {
+        http_response_code(200);
+        exit(200);
     }
     public function send_get_curl_wa_media($media_id = "", $url = "")
     {
