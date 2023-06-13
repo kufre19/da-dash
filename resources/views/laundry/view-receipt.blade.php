@@ -184,7 +184,7 @@
             var printWindow = window.open('', '', 'height=400,width=600');
             printWindow.document.write('<html><head><title>Receipt</title>');
             printWindow.document.write(
-                '<style>@page {size: 72mm 210mm;margin: 0;} body {font-size: 10px; font-weight: bold; line-height: 1.4; text-rendering: optimizeLegibility;}</style>'
+                '<style>@page {size: 72mm 210mm;margin: 0;} body {font-family: "Helvetica", "Arial", "Futura", sans-serif; font-size: 12px; font-weight: bold; line-height: 1.4; text-rendering: optimizeLegibility;}</style>'
             );
             printWindow.document.write('</head><body>');
             printWindow.document.write(printContents);
