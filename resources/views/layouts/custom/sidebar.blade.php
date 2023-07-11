@@ -129,7 +129,7 @@
         </div>
     </li>
 
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight"
             aria-expanded="true" aria-controls="collapseEight">
             <i class="fas fa-power-off"></i>
@@ -142,7 +142,7 @@
                 
             </div>
         </div>
-    </li>
+    </li> --}}
 
 
 
