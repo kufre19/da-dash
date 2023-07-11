@@ -129,6 +129,21 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEight"
+            aria-expanded="true" aria-controls="collapseEight">
+            <i class="fas fa-power-off"></i>
+            <span>Reset</span>
+        </a>
+        <div id="collapseEight" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Reset section:</h6>
+                <a class="collapse-item" href="{{ url('/dashboard/reset') }}">Reset System</a>
+                
+            </div>
+        </div>
+    </li>
+
 
 
 

@@ -47,7 +47,7 @@
 
                         </div>
                         <div id="laundry_form" class="user">
-                            <div class="receipt" id="receipt">
+                            <div class="receipt"  id="receipt">
                                 <h2 class="text-center mb-4">{{ env('APP_NAME') }} Order Receipt</h2>
                                 <h5 class="text-center mb-4">{{ env('COMPANY_ADDRESS') }}</h5>
 
@@ -107,15 +107,30 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                    <tfoot>
+                                    <tfoot >
+                                       
                                         <tr>
                                             <td colspan="5" style="position: relative; text-align: center;">
                                                 <svg id="barcode"></svg>
                                             </td>
+                                                                     
                                         </tr>
+                                      
+                                        <tr>
+                                            
+                                        </tr>
+                                        
                                     </tfoot>
                                 </table>
 
+                                <p class="text-align-center pl-5 mb-2" style="width: 300px; word-wrap:break-word">
+                                    We are not liable for damages due to the nature of garments and garments not collected 30days after due date.
+
+                                </p>
+
+                                <p class="text-align-center pl-5" style="width: 300px; word-wrap:break-word">
+                                Thank You For Choosing Us To Serve You
+                        </p>
                             </div>
 
 

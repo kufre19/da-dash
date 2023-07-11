@@ -191,6 +191,13 @@ trait AdminFunctions
     }
 
 
+    public function reset_system_page()
+    {
+
+    }
+
+   
+
 
    
     

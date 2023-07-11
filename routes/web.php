@@ -69,6 +69,9 @@ Route::group(['middleware' => "auth", 'prefix' => "dashboard"], function () {
         //   Sales
         Route::get("sales/index",[AdminController::class, "show_sales_index_Page"]);
         Route::get("sales/filter",[AdminController::class, "show_sales_index_Page_filter"]);
+        Route::get("reset",[AdminController::class, "reset_system_page"]);
+
+
 
     });
 
