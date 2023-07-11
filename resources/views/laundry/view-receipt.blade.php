@@ -47,7 +47,7 @@
 
                         </div>
                         <div id="laundry_form" class="user">
-                            <div class="receipt"  id="receipt">
+                            <div class="receipt" id="receipt">
                                 <h2 class="text-center mb-4">{{ env('APP_NAME') }} Order Receipt</h2>
                                 <h5 class="text-center mb-4">{{ env('COMPANY_ADDRESS') }}</h5>
 
@@ -55,7 +55,7 @@
                                     <div class="col-6">
                                         <p><strong>Customer Name:</strong> {{ $customer->name }}</p>
                                         <p><strong>Order Date:</strong> {{ $order_date }}</p>
-                                        <p><strong>Pick Up Date:</strong> {{ $pick_up_date ?? "NA" }}</p>
+                                        <p><strong>Pick Up Date:</strong> {{ $pick_up_date ?? 'NA' }}</p>
 
                                     </div>
 
@@ -107,30 +107,31 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                    <tfoot >
-                                       
+                                    <tfoot>
+
                                         <tr>
                                             <td colspan="5" style="position: relative; text-align: center;">
                                                 <svg id="barcode"></svg>
                                             </td>
-                                                                     
+
                                         </tr>
-                                      
+
                                         <tr>
-                                            
+
                                         </tr>
-                                        
+
                                     </tfoot>
                                 </table>
 
                                 <p class="text-align-center pl-5 mb-2" style="width: 300px; word-wrap:break-word">
-                                    We are not liable for damages due to the nature of garments and garments not collected 30days after due date.
+                                    We are not liable for damages due to the nature of garments and garments not collected
+                                    30days after due date.
 
                                 </p>
 
                                 <p class="text-align-center pl-5" style="width: 300px; word-wrap:break-word">
-                                Thank You For Choosing Us To Serve You
-                        </p>
+                                    Thank You For Choosing Us To Serve You
+                                </p>
                             </div>
 
 
@@ -222,7 +223,8 @@
             var labelData =
                 '<div style="font-weight: bold; font-size: 24px; text-align: left; border: 2px solid black; padding-top: 0; margin-top: 0;">' +
                 '<p>' + '{{ $order_number ?? '' }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
-                '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}'+ '<br>' + 'Laundry:{{ $item_count ?? '' }}' + '</p>' + '</div>';
+                '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}' + '<br>' +
+                'Laundry:{{ $item_count ?? '' }}' + '</p>' + '</div>';
             document.body.innerHTML = labelData;
 
             // Add print styles to the page
