@@ -116,9 +116,7 @@
 
                                         </tr>
 
-                                        <tr>
 
-                                        </tr>
 
                                     </tfoot>
                                 </table>
@@ -221,18 +219,25 @@
         function printLabel() {
             var originalContents = document.body.innerHTML;
             var labelData =
-                '<div style="font-weight: bold; font-size: 24px; text-align: left; border: 2px solid black; padding-top: 0; margin-top: 0;">' +
-                '<p>' + '{{ $order_number ?? '' }}' + '<br>' + '{{ $customer->name }}' + '<br>' +
-                '{{ $customer->phone }}' + '<br>' + '{{ $order_shelf ?? '' }}' + '<br>' +
-                'Laundry:{{ $item_count ?? '' }}' + '</p>' + '</div>';
+                '<div style="width:auto; font-weight: bold; font-size: 24px; text-align: left; border: 2px solid black; padding-top: 0; margin-top: 0;">' +
+                '<p>' + '{{ $order_number ?? '' }}'
+                + "<hr style=' width:40px; transform:rotate(90deg);'>" 
+                + '{{ $customer->name }}' 
+                + "<hr style=' width:40px; transform:rotate(90deg);'>" 
+                +'{{ $customer->phone }}' 
+                + "<hr style=' width:40px; transform:rotate(90deg);'>" 
+                + '{{ $order_shelf ?? '' }}' 
+                + "<hr style=' width:40px; transform:rotate(90deg);'>" 
+                +'{{ $item_count ?? '' }}' + '</p>' 
+                + "<hr style=' width:40px; transform:rotate(90deg);'>" 
+                +'{{ $pick_up_date ?? '' }}'
+                + '</div>';
             document.body.innerHTML = labelData;
 
             // Add print styles to the page
             var printCSS = `
                 @media print {
-                * {
-                    white-space: pre-wrap !important;
-                }
+                
                 @page {
                     size: auto;
                     margin: 0;
